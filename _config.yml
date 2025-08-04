@@ -20,12 +20,6 @@ last_updated: false # set to true if you want to display last updated in the foo
 impressum_path: # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
 back_to_top: true # set to false to disable the back to top button
 
-# # Social links
-# github_username: paulinebourigault
-# scholar_userid: 30TsEC4AAAAJ&hl=fr&authuser=1
-# linkedin_username: pauline-bourigault
-# twitter_username: pauline_bourigault
-
 # -----------------------------------------------------------------------------
 # Theme
 # -----------------------------------------------------------------------------
@@ -75,25 +69,12 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # Analytics and search engine verification
 # -----------------------------------------------------------------------------
 
-github_username: paulinebourigault # your GitHub user name
-gitlab_username: # your GitLab user name
-# twitter_username: frtimlive # your Twitter handle
-linkedin_username: pauline-bourigault # your LinkedIn user name
-scholar_userid: 30TsEC4AAAAJ&hl # your Google Scholar ID
+github_username: paulinebourigault
+linkedin_username: pauline-bourigault
+scholar_userid: 30TsEC4AAAAJ
 x_username: # your X/Twitter username if you have one
 bluesky_username: # your Bluesky username if you have one
 email: p.bourigault22@imperial.ac.uk
-orcid_id: # your ORCID ID
-medium_username: # your Medium username
-quora_username: # your Quora username
-publons_id: # your ID on Publons
-research_gate_profile: # your profile on ResearchGate
-blogger_url: # your blogger URL
-work_url: # work page URL
-keybase_username: # your keybase user name
-wikidata_id: # your wikidata id
-dblp_url: # your DBLP profile url
-stackoverflow_id: #your stackoverflow id
 
 contact_note:
 
@@ -271,7 +252,7 @@ display_categories: ["external-services"] # these categories will be displayed o
 
 scholar:
   last_name: [Bourigault]
-  first_name: [Pauline,]
+  first_name: [Pauline]
 
   style: apa
   locale: en
@@ -330,7 +311,7 @@ filtered_bibtex_keywords:
   ]
 
 # Maximum number of authors to be shown for each publication (more authors are visible on click)
-max_author_limit: blank # leave blank to always show all authors
+max_author_limit:  # leave blank to always show all authors
 more_authors_animation_delay: 10 # more authors are revealed on click using animation; smaller delay means faster animation
 
 # Enables publication thumbnails. If disabled, none of the publications will display thumbnails, even if specified in the bib entry.
