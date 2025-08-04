@@ -6,7 +6,7 @@ subtitle: <a href='https://www.imperial.ac.uk/'>Imperial College London</a>. Dep
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: photoPB.jpg
   image_circular: false # crops the image to make it circular
   address: >
     <p>Imperial College London</p>
