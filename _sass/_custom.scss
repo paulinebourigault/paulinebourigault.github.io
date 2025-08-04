@@ -1,0 +1,14 @@
+// Custom dark theme colors
+:root {
+  --global-bg-color: #1a1a1a;
+  --global-code-bg-color: #2a2a2a;
+  --global-text-color: #e8e8e8;
+  --global-theme-color: #00bcd4;
+  --global-hover-color: #00acc1;
+}
+
+// Make sure dark mode is default
+html[data-theme='dark'] {
+  --global-bg-color: #1a1a1a;
+  --global-text-color: #e8e8e8;
+}
