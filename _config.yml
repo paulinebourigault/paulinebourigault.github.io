@@ -398,6 +398,15 @@ enable_project_categories:  true   # enables categorization of projects into
 enable_medium_zoom:         true   # enables image zoom feature (as on medium.com)
 
 # -----------------------------------------------------------------------------
+# Navigation
+# -----------------------------------------------------------------------------
+
+nav_enabled: true
+nav_order:
+  - about
+  - publications  # Make sure this is included
+
+# -----------------------------------------------------------------------------
 # Library versions
 # -----------------------------------------------------------------------------
 
