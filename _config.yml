@@ -80,6 +80,9 @@ gitlab_username: # your GitLab user name
 # twitter_username: frtimlive # your Twitter handle
 linkedin_username: pauline-bourigault # your LinkedIn user name
 scholar_userid: 30TsEC4AAAAJ&hl # your Google Scholar ID
+x_username: # your X/Twitter username if you have one
+bluesky_username: # your Bluesky username if you have one
+email: p.bourigault22@imperial.ac.uk
 orcid_id: # your ORCID ID
 medium_username: # your Medium username
 quora_username: # your Quora username

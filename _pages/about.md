@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='https://www.imperial.ac.uk/'>Imperial College London</a>. Department of Computing & EEE.
+subtitle: <a href='https://www.imperial.ac.uk/'>Imperial College London</a>, Department of Computing & EEE.
 
 profile:
   align: right
@@ -21,10 +21,10 @@ announcements:
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
   limit: 5 # leave blank to include all the news in the `_news` folder
 
-latest_posts:
-  enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+# latest_posts:
+#   enabled: false
+#   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
+#   limit: 3 # leave blank to include all the blog posts
 ---
 
 Hi! I am a PhD student at Imperial College London, working on robust machine learning, signal processing, and formal reasoning systems. My research focuses on scalable and interpretable learning algorithms for complex multi-dimensional data, with applications in time-series data, computer vision, and automated theorem proving. 
