@@ -1,3 +1,115 @@
+<!-- CORRECTED DARK MODE FIX - Replace the previous one in _includes/head.liquid -->
+<script>
+  document.documentElement.setAttribute('data-theme', 'dark');
+  if (typeof Storage !== 'undefined') {
+    localStorage.setItem('theme', 'dark');
+  }
+</script>
+
+<style>
+  /* HIDE ONLY THE TOGGLE BUTTON */
+  .toggle-container,
+  #light-toggle,
+  button#light-toggle,
+  li.toggle-container {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* FORCE DARK BACKGROUNDS */
+  :root,
+  html,
+  body {
+    background-color: #212529 !important;
+    --global-bg-color: #212529 !important;
+    --global-text-color: #e5e7eb !important;
+    --global-theme-color: #06b6d4 !important;
+  }
+
+  /* FORCE WHITE TEXT - BUT NOT ON LINKS OR CANVAS */
+  body,
+  div:not(.social):not(.contact-icons),
+  p,
+  span:not(.nav-link),
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  td,
+  th,
+  li:not(.nav-item) {
+    color: #e5e7eb !important;
+  }
+
+  /* KEEP LINKS CYAN/BLUE */
+  a,
+  a *,
+  .nav-link,
+  .navbar-brand {
+    color: #06b6d4 !important;
+  }
+
+  a:hover {
+    color: #0891b2 !important;
+  }
+
+  /* DARK NAVBAR */
+  .navbar {
+    background-color: #212529 !important;
+    border-bottom: 1px solid #424246 !important;
+  }
+
+  /* DARK CARDS */
+  .card {
+    background-color: #1a1d21 !important;
+  }
+
+  /* Let quaternion background work */
+  canvas,
+  canvas * {
+    background: transparent !important;
+  }
+
+  #quaternion-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+  }
+</style>
+
+<style>
+  body {
+    background-color: transparent !important;
+  }
+
+  .container,
+  main,
+  .post,
+  article {
+    background-color: transparent !important;
+  }
+
+  .card {
+    background-color: rgba(26, 29, 33, 0.85) !important;
+    backdrop-filter: blur(10px);
+  }
+
+  .navbar {
+    background-color: rgba(33, 37, 41, 0.95) !important;
+    backdrop-filter: blur(5px);
+  }
+
+  #quaternion-canvas {
+    z-index: -2 !important;
+  }
+</style>
+
 <!-- Metadata, OpenGraph and Schema.org -->
 {% include metadata.liquid %}
 
@@ -83,6 +195,9 @@
     initTheme();
   </script>
 {% endif %}
+
+<script src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
+<script src="{{ '/assets/js/force-dark-mode.js' | relative_url | bust_file_cache }}"></script>
 
 {% if page.map %}
   <!-- GeoJSON support via Leaflet -->

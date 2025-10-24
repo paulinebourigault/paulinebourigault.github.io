@@ -6,7 +6,9 @@ permalink: /
 
 profile:
   align: right
-  image: photoPB.jpg
+  image: photoPB(1).jpg
+  image_circular: false # or true if you want circular
+  max-width: 200px # adjust as needed
   address: >
     <p>Imperial College London</p>
     <p>London, UK</p>
@@ -17,7 +19,7 @@ social: true # includes social icons at the bottom of the page
 announcements:
   enabled: true # includes a list of news items
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
+  limit: # leave blank to include all the news in the `_news` folder
 
 # latest_posts:
 #   enabled: false
@@ -25,6 +27,6 @@ announcements:
 #   limit: 3 # leave blank to include all the blog posts
 ---
 
-Hi! I am a PhD student at Imperial College London, working on robust machine learning, signal processing, and formal reasoning systems. My research focuses on scalable and interpretable learning algorithms for complex multi-dimensional data, with applications in time-series data, computer vision, and automated theorem proving. 
+Hi! I am a PhD student at Imperial College London, working on robust machine learning, signal processing, and formal reasoning systems. My research focuses on scalable and interpretable learning algorithms for complex multi-dimensional data, with applications in time-series data, computer vision, and automated theorem proving.
 
 I'm always interested in meeting new people and exploring new collaborations. If you'd like to get in touch with me, please email me at p.bourigault22 at imperial dot ac dot uk.
