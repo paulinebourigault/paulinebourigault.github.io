@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Create particles
+  // Create particles - SMALLER SIZE
   const particles = [];
   const numParticles = 60;
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         z: Math.random() * 600 - 300,
       },
       basePos: {},
-      size: Math.random() * 2.5 + 1.5, // Slightly larger particles
+      size: Math.random() * 1.2 + 0.8, // REDUCED: was 2.5 + 1.5, now 1.2 + 0.8 (max 2px)
       hue: Math.random() * 40 + 200,
     });
     particles[i].basePos = { ...particles[i].pos };
@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
     mouseX += (targetMouseX - mouseX) * 0.02;
     mouseY += (targetMouseY - mouseY) * 0.02;
 
-    // Clear with LESS fade for more visible trails
-    ctx.fillStyle = "rgba(33, 37, 41, 0.05)"; // Reduced from 0.08 for more visible particles
+    // Clear with subtle fade
+    ctx.fillStyle = "rgba(33, 37, 41, 0.06)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     angle += 0.0015;
@@ -115,19 +115,19 @@ document.addEventListener("DOMContentLoaded", function () {
       const x2d = p.pos.x * scale + (canvas.width / 2) * (1 - scale);
       const y2d = p.pos.y * scale + (canvas.height / 2) * (1 - scale);
 
-      // INCREASED opacity for more visible particles
-      const opacity = 0.5 + scale * 0.8; // Increased from 0.35
+      // More subtle opacity
+      const opacity = 0.4 + scale * 0.6; // Reduced from 0.5 + 0.8
 
-      // BRIGHTER particles
-      const particleColor = `hsla(${p.hue}, 85%, 65%, ${opacity})`; // Increased lightness from 55% to 65%
+      // Subtle particles
+      const particleColor = `hsla(${p.hue}, 75%, 60%, ${opacity})`;
 
-      // Draw particle
+      // Draw particle - SMALLER
       ctx.beginPath();
       ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
       ctx.fillStyle = particleColor;
       ctx.fill();
 
-      // Draw connections - MORE VISIBLE
+      // Draw connections - MORE SUBTLE
       particles.slice(i + 1).forEach((p2) => {
         const dx = p.pos.x - p2.pos.x;
         const dy = p.pos.y - p2.pos.y;
@@ -139,15 +139,15 @@ document.addEventListener("DOMContentLoaded", function () {
           const x2d2 = p2.pos.x * scale2 + (canvas.width / 2) * (1 - scale2);
           const y2d2 = p2.pos.y * scale2 + (canvas.height / 2) * (1 - scale2);
 
-          // INCREASED line opacity
-          const connectionOpacity = (1 - dist3D / 200) * 0.35 * Math.min(scale, scale2); // Increased from 0.25
-          const lineColor = `rgba(170, 190, 220, ${connectionOpacity})`; // Lighter blue
+          // More subtle connections
+          const connectionOpacity = (1 - dist3D / 200) * 0.2 * Math.min(scale, scale2); // Reduced from 0.35
+          const lineColor = `rgba(150, 170, 200, ${connectionOpacity})`;
 
           ctx.beginPath();
           ctx.moveTo(x2d, y2d);
           ctx.lineTo(x2d2, y2d2);
           ctx.strokeStyle = lineColor;
-          ctx.lineWidth = 1; // Slightly thicker
+          ctx.lineWidth = 0.6; // Thinner lines (was 1)
           ctx.stroke();
         }
       });

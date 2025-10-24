@@ -170,3 +170,15 @@ article {
     position: relative;
   }
 }
+
+.profile img {
+  max-width: 250px !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+@media (min-width: 576px) {
+  .profile {
+    width: 20% !important;
+  }
+}
