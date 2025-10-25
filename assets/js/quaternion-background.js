@@ -39,115 +39,130 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Create particles - SMALLER SIZE
+  // Create particles ONLY on left and right sides
   const particles = [];
-  const numParticles = 60;
+  const numParticles = 40; // Reduced number
+  const sideMargin = 0.25; // Particles in left 25% and right 25%
 
   for (let i = 0; i < numParticles; i++) {
+    // Randomly place in left or right side
+    const isLeftSide = Math.random() > 0.5;
+    const x = isLeftSide
+      ? Math.random() * (canvas.width * sideMargin) // Left side
+      : canvas.width * (1 - sideMargin) + Math.random() * (canvas.width * sideMargin); // Right side
+
     particles.push({
       pos: {
-        x: Math.random() * canvas.width,
+        x: x,
         y: Math.random() * canvas.height,
-        z: Math.random() * 600 - 300,
+        z: Math.random() * 400 - 200,
       },
       basePos: {},
-      size: Math.random() * 1.2 + 0.8, // REDUCED: was 2.5 + 1.5, now 1.2 + 0.8 (max 2px)
+      size: Math.random() * 1 + 0.6, // Small particles
       hue: Math.random() * 40 + 200,
+      side: isLeftSide ? "left" : "right", // Track which side
     });
     particles[i].basePos = { ...particles[i].pos };
   }
 
-  let mouseX = canvas.width / 2;
-  let mouseY = canvas.height / 2;
-  let targetMouseX = mouseX;
-  let targetMouseY = mouseY;
   let angle = 0;
 
-  window.addEventListener("mousemove", (e) => {
-    targetMouseX = e.clientX;
-    targetMouseY = e.clientY;
-  });
+  // NO MOUSE TRACKING - automatic rotation only
+  // Fixed rotation axis (no mouse interaction)
+  const fixedAxis = {
+    x: 0.3,
+    y: 0.4,
+    z: 0.5,
+  };
+
+  // Normalize the fixed axis
+  const len = Math.sqrt(fixedAxis.x ** 2 + fixedAxis.y ** 2 + fixedAxis.z ** 2);
+  fixedAxis.x /= len;
+  fixedAxis.y /= len;
+  fixedAxis.z /= len;
 
   function animate() {
-    mouseX += (targetMouseX - mouseX) * 0.02;
-    mouseY += (targetMouseY - mouseY) * 0.02;
-
     // Clear with subtle fade
-    ctx.fillStyle = "rgba(33, 37, 41, 0.06)";
+    ctx.fillStyle = "rgba(33, 37, 41, 0.08)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    angle += 0.0015;
+    // Slow automatic rotation - NO MOUSE INFLUENCE
+    angle += 0.001; // Very slow rotation
 
-    const axis = {
-      x: (mouseX / canvas.width - 0.5) * 2,
-      y: (mouseY / canvas.height - 0.5) * 2,
-      z: 0.3,
-    };
-
-    const len = Math.sqrt(axis.x ** 2 + axis.y ** 2 + axis.z ** 2);
-    axis.x /= len;
-    axis.y /= len;
-    axis.z /= len;
-
+    // Create quaternion from FIXED axis-angle (no mouse)
     const halfAngle = angle / 2;
     const q = new Quaternion(
       Math.cos(halfAngle),
-      axis.x * Math.sin(halfAngle),
-      axis.y * Math.sin(halfAngle),
-      axis.z * Math.sin(halfAngle)
+      fixedAxis.x * Math.sin(halfAngle),
+      fixedAxis.y * Math.sin(halfAngle),
+      fixedAxis.z * Math.sin(halfAngle)
     ).normalize();
 
     particles.forEach((p, i) => {
+      // Calculate center for rotation based on which side particle is on
+      const centerX =
+        p.side === "left"
+          ? (canvas.width * sideMargin) / 2 // Center of left margin
+          : canvas.width * (1 - sideMargin / 2); // Center of right margin
+
       const centered = {
-        x: p.basePos.x - canvas.width / 2,
+        x: p.basePos.x - centerX,
         y: p.basePos.y - canvas.height / 2,
         z: p.basePos.z,
       };
 
+      // Apply quaternion rotation
       const rotated = q.rotatePoint(centered);
 
-      p.pos.x = rotated.x + canvas.width / 2;
+      // Move back to side position
+      p.pos.x = rotated.x + centerX;
       p.pos.y = rotated.y + canvas.height / 2;
       p.pos.z = rotated.z;
 
-      const perspective = 800;
+      // Perspective projection
+      const perspective = 600;
       const scale = perspective / (perspective + p.pos.z);
-      const x2d = p.pos.x * scale + (canvas.width / 2) * (1 - scale);
+      const x2d = p.pos.x * scale + centerX * (1 - scale);
       const y2d = p.pos.y * scale + (canvas.height / 2) * (1 - scale);
 
-      // More subtle opacity
-      const opacity = 0.4 + scale * 0.6; // Reduced from 0.5 + 0.8
+      // Subtle opacity
+      const opacity = 0.25 + scale * 0.45;
 
       // Subtle particles
-      const particleColor = `hsla(${p.hue}, 75%, 60%, ${opacity})`;
+      const particleColor = `hsla(${p.hue}, 70%, 55%, ${opacity})`;
 
-      // Draw particle - SMALLER
+      // Draw particle
       ctx.beginPath();
       ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
       ctx.fillStyle = particleColor;
       ctx.fill();
 
-      // Draw connections - MORE SUBTLE
+      // Draw connections only within same side and nearby particles
       particles.slice(i + 1).forEach((p2) => {
+        // Only connect particles on same side
+        if (p.side !== p2.side) return;
+
         const dx = p.pos.x - p2.pos.x;
         const dy = p.pos.y - p2.pos.y;
         const dz = p.pos.z - p2.pos.z;
         const dist3D = Math.sqrt(dx ** 2 + dy ** 2 + dz ** 2);
 
-        if (dist3D < 200) {
+        // Shorter connection distance for subtlety
+        if (dist3D < 150) {
           const scale2 = perspective / (perspective + p2.pos.z);
-          const x2d2 = p2.pos.x * scale2 + (canvas.width / 2) * (1 - scale2);
+          const centerX2 = p2.side === "left" ? (canvas.width * sideMargin) / 2 : canvas.width * (1 - sideMargin / 2);
+          const x2d2 = p2.pos.x * scale2 + centerX2 * (1 - scale2);
           const y2d2 = p2.pos.y * scale2 + (canvas.height / 2) * (1 - scale2);
 
-          // More subtle connections
-          const connectionOpacity = (1 - dist3D / 200) * 0.2 * Math.min(scale, scale2); // Reduced from 0.35
-          const lineColor = `rgba(150, 170, 200, ${connectionOpacity})`;
+          // Very subtle connections
+          const connectionOpacity = (1 - dist3D / 150) * 0.12 * Math.min(scale, scale2);
+          const lineColor = `rgba(140, 160, 190, ${connectionOpacity})`;
 
           ctx.beginPath();
           ctx.moveTo(x2d, y2d);
           ctx.lineTo(x2d2, y2d2);
           ctx.strokeStyle = lineColor;
-          ctx.lineWidth = 0.6; // Thinner lines (was 1)
+          ctx.lineWidth = 0.5;
           ctx.stroke();
         }
       });
@@ -158,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   animate();
 
+  // Handle window resize
   window.addEventListener("resize", () => {
     const oldWidth = canvas.width;
     const oldHeight = canvas.height;
@@ -165,8 +181,21 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    // Reposition particles to maintain side placement
     particles.forEach((p) => {
-      p.basePos.x = (p.basePos.x / oldWidth) * canvas.width;
+      if (p.side === "left") {
+        // Keep in left margin
+        p.basePos.x = (p.basePos.x / oldWidth) * canvas.width;
+        if (p.basePos.x > canvas.width * sideMargin) {
+          p.basePos.x = Math.random() * (canvas.width * sideMargin);
+        }
+      } else {
+        // Keep in right margin
+        const oldRightStart = oldWidth * (1 - sideMargin);
+        const newRightStart = canvas.width * (1 - sideMargin);
+        p.basePos.x = newRightStart + ((p.basePos.x - oldRightStart) / (oldWidth * sideMargin)) * (canvas.width * sideMargin);
+      }
+
       p.basePos.y = (p.basePos.y / oldHeight) * canvas.height;
       p.pos.x = p.basePos.x;
       p.pos.y = p.basePos.y;
