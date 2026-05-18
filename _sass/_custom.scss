@@ -1,6 +1,5 @@
-// MINIMAL DARK MODE ONLY - Surgical fixes only
+// Light theme overrides for a clean white site.
 
-// Hide theme toggle button
 .toggle-container,
 #light-toggle,
 button#light-toggle,
@@ -8,127 +7,76 @@ li.toggle-container {
   display: none !important;
 }
 
-// Force dark mode CSS variables
 :root,
 html[data-theme="light"],
 html[data-theme="dark"] {
-  color-scheme: dark !important;
-  --global-bg-color: #212529 !important;
-  --global-code-bg-color: #2f3337 !important;
-  --global-text-color: #e5e7eb !important;
-  --global-text-color-light: #9ca3af !important;
-  --global-theme-color: #06b6d4 !important;
-  --global-hover-color: #0891b2 !important;
+  color-scheme: light !important;
+  --global-bg-color: #ffffff !important;
+  --global-code-bg-color: #f3f4f6 !important;
+  --global-text-color: #1f2937 !important;
+  --global-text-color-light: #6b7280 !important;
+  --global-theme-color: #0369a1 !important;
+  --global-hover-color: #075985 !important;
   --global-hover-text-color: #ffffff !important;
-  --global-card-bg-color: #1a1d21 !important;
-  --global-divider-color: #424246 !important;
-  --global-footer-bg-color: #374151 !important;
-  --global-footer-text-color: #e5e7eb !important;
-  --global-footer-link-color: #06b6d4 !important;
+  --global-card-bg-color: #ffffff !important;
+  --global-divider-color: #e5e7eb !important;
+  --global-footer-bg-color: #f9fafb !important;
+  --global-footer-text-color: #374151 !important;
+  --global-footer-link-color: #0369a1 !important;
 }
 
-// Ensure body stays dark
+html {
+  background-color: #ffffff !important;
+}
+
 body {
-  background-color: #212529 !important;
-  color: #e5e7eb !important;
+  background-color: transparent !important;
+  color: #1f2937 !important;
 }
 
-// Dark navbar
 .navbar {
-  background-color: #212529 !important;
-  border-bottom: 1px solid #424246 !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  backdrop-filter: blur(5px);
 }
 
-// Keep navigation links visible and cyan
 .navbar-brand,
 .nav-link {
-  color: #e5e7eb !important;
+  color: #1f2937 !important;
 }
 
 .navbar-brand:hover,
 .nav-link:hover {
-  color: #06b6d4 !important;
+  color: #0369a1 !important;
 }
 
 .navbar-nav .nav-item.active > .nav-link {
-  color: #06b6d4 !important;
+  color: #0369a1 !important;
 }
 
-// Dark cards
 .card {
-  background-color: #1a1d21 !important;
-  color: #e5e7eb !important;
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid #e5e7eb !important;
 }
 
-// Ensure links stay cyan/blue
-a {
-  color: #06b6d4 !important;
-}
-
-a:hover {
-  color: #0891b2 !important;
-}
-
-// Headers should be bright
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
+h1, h2, h3, h4, h5, h6,
 .post-title {
-  color: #f9fafb !important;
+  color: #111827 !important;
 }
 
-// Regular text white
-p,
-span,
-div,
-td,
-th {
-  color: #e5e7eb !important;
+p, span, div, td, th, li {
+  color: inherit;
 }
 
-// But NOT links inside them
-a,
-a * {
-  color: #06b6d4 !important;
-}
-
-// Make sure quaternion canvas is visible
+// Small quaternion frame fixed top-right; positioning handled inline in the JS.
 #quaternion-canvas {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: -1 !important;
   pointer-events: none !important;
   background: transparent !important;
 }
 
-// Don't override canvas or its context
 canvas {
   background: transparent !important;
-}
-
-// ============================================================================
-// MAKE QUATERNION BACKGROUND VISIBLE
-// ============================================================================
-
-#quaternion-canvas {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: -2 !important;
-  pointer-events: none !important;
-}
-
-body {
-  background-color: rgba(33, 37, 41, 0.1) !important; // Semi-transparent dark
-  position: relative;
 }
 
 .container,
@@ -138,47 +86,124 @@ main {
 
 .post,
 article {
-  background-color: rgba(33, 37, 41, 0.1) !important; // More transparent
+  background-color: transparent !important;
 }
 
-.card,
-.card-body {
-  background-color: rgba(26, 29, 33, 0.1) !important; // Semi-transparent dark cards
-  backdrop-filter: blur(10px);
-}
-
-.navbar {
-  background-color: rgba(33, 37, 41, 0.95) !important; // Mostly opaque navbar
-  backdrop-filter: blur(5px);
-}
-
+// Smaller profile photo
 .profile {
-  background-color: transparent !important;
-}
+  max-width: 150px !important;
 
-.news,
-.table {
-  background-color: transparent !important;
-}
-
-.table tr {
-  background-color: transparent !important;
-}
-
-* {
-  &:not(canvas):not(img):not(svg) {
-    position: relative;
+  picture,
+  img {
+    max-width: 150px !important;
+    width: 100% !important;
+    height: auto !important;
   }
-}
-
-.profile img {
-  max-width: 250px !important;
-  width: 100% !important;
-  height: auto !important;
 }
 
 @media (min-width: 576px) {
   .profile {
-    width: 20% !important;
+    width: 150px !important;
+    max-width: 150px !important;
+  }
+}
+
+// Cleaner publications presentation
+.publications {
+  ol.bibliography {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+      padding: 1rem 0;
+      border-bottom: 1px solid #f1f5f9;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .title {
+        font-weight: 600;
+        color: #111827 !important;
+        margin-bottom: 0.25rem;
+      }
+
+      .author {
+        color: #4b5563 !important;
+        margin-bottom: 0.15rem;
+      }
+
+      .periodical {
+        color: #6b7280 !important;
+        font-size: 0.95em;
+      }
+
+      .links .btn {
+        background-color: #f3f4f6 !important;
+        color: #0369a1 !important;
+        border: 1px solid #e5e7eb !important;
+        margin-right: 0.25rem;
+        margin-top: 0.25rem;
+
+        &:hover {
+          background-color: #e0f2fe !important;
+          color: #075985 !important;
+          border-color: #bae6fd !important;
+        }
+      }
+
+      .tldr-text {
+        background-color: #f8fafc;
+        border-left: 3px solid #0369a1;
+        padding: 0.5rem 0.75rem;
+        margin-top: 0.5rem;
+        color: #1f2937;
+        font-size: 0.95em;
+      }
+
+      .abstract.hidden,
+      .bibtex.hidden,
+      .tldr.hidden {
+        display: none;
+      }
+
+      .abstract.hidden.open,
+      .bibtex.hidden.open,
+      .tldr.hidden.open {
+        display: block;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  h2.year {
+    color: #111827 !important;
+    border-bottom: 2px solid #0369a1;
+    padding-bottom: 0.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+}
+
+// News list cleaner
+.news {
+  .table {
+    background-color: transparent !important;
+    color: #1f2937 !important;
+
+    th, td {
+      border-color: #f1f5f9 !important;
+      color: #1f2937 !important;
+    }
+  }
+}
+
+// Social icons
+.social .contact-icons a {
+  color: #0369a1 !important;
+
+  &:hover {
+    color: #075985 !important;
   }
 }

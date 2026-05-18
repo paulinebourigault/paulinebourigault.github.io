@@ -1,7 +1,22 @@
 ---
 ---
 
+% Each paper supports two optional placeholder fields:
+%   tldr  -> shows a "TL;DR" button that expands a one-line plain-language summary
+%   code  -> shows a "Code" button linking to the repo
+% Replace the "TODO: ..." values below with real content, or delete the line to hide the button.
+
 @string{aps = {American Physical Society,}}
+
+@unpublished{bourigault2026leanpolish,
+  title={{LeanPolish}: A Kernel-Verified Dataset and Symbolic Compression Framework for {Lean 4} Proofs},
+  author={Bourigault, Pauline},
+  year={2026},
+  note={Under review},
+  dataset={https://huggingface.co/datasets/leanpolish-anon/lean-proof-compression},
+  selected={true},
+  tldr={A kernel-verified symbolic compression framework and dataset for Lean 4 proofs, including structured before/after pairs with quality-tier and gate annotations.}
+}
 
 @inproceedings{bourigault2025information,
   title={Information-Geometric Neural Granger Causality},
@@ -9,7 +24,8 @@
   booktitle={ICML Workshop on High-dimensional Learning Dynamics},
   year={2025},
   pdf={https://openreview.net/pdf?id=Ii0MqqztQZ},
-  selected={false}
+  selected={false},
+  tldr={We introduce Information-Geometric Neural Granger Causality (IG-NGC), a framework that provides a partial theoretical explanation for neural causality methods. Our key insight is that when assuming Gaussian output distributions and diagonal Fisher Information approximation, causality can be interpreted as directional information flow measured by a simplified Fisher metric on statistical manifolds.}
 }
 
 @inproceedings{bourigault2025frevl,
@@ -19,7 +35,9 @@
   year={2025},
   note={Oral Presentation},
   arxiv={2508.04469},
-  selected={true}
+  selected={true},
+  tldr={FrEVL is a vision-language understanding by freezing pretrained CLIP embeddings and training only a lightweight fusion network. This approach delivers: 3× faster inference than ALBEF/BLIP, 70% lower deployment costs, 68.4M trainable parameters (vs 200M+ in SOTA models), 850 images/sec throughput on single V100, production-ready with <25ms p99 latency.},
+  code={https://github.com/EmmanuelleB985/FrEVL}
 }
 
 @inproceedings{bourigault2025kernel,
@@ -28,16 +46,19 @@
   booktitle={International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
   year={2025},
   arxiv={2501.15265v1},
-  selected={true}
+  selected={true},
+  tldr={We present a novel approach to anomaly detection by integrating Generalized Hyperbolic (GH) processes into kernel-based methods. The GH distribution, known for its flexibility in modeling skewness, heavy tails, and kurtosis, helps to capture complex patterns in data that deviate from Gaussian assumptions. We propose a GH-based kernel function and utilize it within Kernel Density Estimation (KDE) and One-Class Support Vector Machines (OCSVM) to develop anomaly detection frameworks. Theoretical results confirmed the positive semi-definiteness and consistency of the GH-based kernel, ensuring its suitability for machine learning applications. Empirical evaluation on synthetic and real-world datasets showed that our method improves detection performance in scenarios involving heavy-tailed and asymmetric or imbalanced distributions.},
+  code={https://github.com/paulinebourigault/GHKernelAnomalyDetect}
 }
 
 @article{wang2025kimina,
   title={Kimina-Prover Preview: Towards Large Formal Reasoning Models with Reinforcement Learning},
-  author={Haiming Wang et al.},
+  author={Project Numina and Kimi (Moonshot AI) Teams},
   journal={arXiv preprint arXiv:2504.11354},
   year={2025},
   arxiv={2504.11354},
-  selected={true}
+  selected={true},
+  code={https://github.com/MoonshotAI/Kimina-Prover-Preview}
 }
 
 @inproceedings{bourigault2024multimodal,
@@ -46,7 +67,8 @@
   booktitle={British Machine Vision Conference (BMVC)},
   year={2024},
   pdf={https://bmva-archive.org.uk/bmvc/2024/papers/Paper_64/paper.pdf},
-  selected={false}
+  selected={false},
+  tldr={A multi-modal attribution method that leverages the information bottleneck principle and cross-attention guidance to identify the most relevant features across different modalities.}
 }
 
 @inproceedings{bourigault2024mvdiff,
@@ -55,7 +77,9 @@
   booktitle={CVPR Workshop on Generative Models for Computer Vision},
   year={2024},
   pdf={https://openaccess.thecvf.com/content/CVPR2024W/GCV/html/Bourigault_MVDiff_Scalable_and_Flexible_Multi-view_Diffusion_for_3D_Object_Reconstruction_CVPRW_2024_paper.html},
-  selected={false}
+  selected={false},
+  tldr={MVDiff is a diffusion model that generates consistent multi-view images from single-view inputs for high-quality 3D reconstruction.},
+  code={https://github.com/EmmanuelleB985/MVDiff}
 }
 
 @inproceedings{bourigault2024quaternion,
@@ -65,7 +89,8 @@
   year={2024},
   note={Oral Presentation},
   arxiv={2402.14227},
-  selected={false}
+  selected={false},
+  tldr={We develop a robust quaternion recurrent neural network (QRNN) for real-time processing of 3D and 4D data with outliers. This is achieved by combining the real-time recurrent learning (RTRL) algorithm and the maximum correntropy criterion (MCC) as a loss function. While both the mean square error and maximum correntropy criterion are viable cost functions, it is shown that the non-quadratic maximum correntropy loss function is less sensitive to outliers, making it suitable for applications with multidimensional noisy or uncertain data. Both algorithms are derived based on the novel generalised HR (GHR) calculus, which allows for the differentiation of real functions of quaternion variables and offers the product and chain rules, thus enabling elegant and compact derivations.}
 }
 
 @article{sun2023convex,
@@ -75,7 +100,8 @@
   year={2023},
   publisher={IEEE},
   pdf={https://ieeexplore.ieee.org/abstract/document/10301360},
-  selected={true}
+  selected={true},
+  tldr={Convex optimization methods have been extensively used in communications and signal processing. However, the theory of quaternion optimization is currently not as fully developed and systematic as that of complex and real optimization. To this end, we establish the convex optimization theory in quaternion variables based on the generalized Hamilton-real (GHR) calculus. This is achieved in a way that conforms with traditional complex and real optimization theory. We present several discriminant theorems for convex quaternion functions analogous to their complex counterparts. We also provide several discriminant criteria for strongly convex functions by the theorems of convex quaternion functions. Furthermore, we prove that the quaternion Newton method can converge in one step for positive definite quadratic quaternion functions and provide two applications in quaternion signal processing. These results provide a solid theoretical foundation for convex quaternion optimization and open avenues for further developments in quaternion signal processing applications.}
 }
 
 @article{mandic2023hr,
@@ -83,7 +109,8 @@
   author={Mandic, Danilo P. and Talebi, Soroush Pourya and Took, Clive Cheong and Xia, Yili and Xu, Dongpo and Xiang, Min and Bourigault, Pauline},
   journal={arXiv preprint arXiv:2311.16771},
   year={2023},
-  arxiv={2311.16771}
+  arxiv={2311.16771},
+  tldr={In this work, the foundations of the HR-calculus are revised and the required tools for deriving adaptive learning techniques suitable for dealing with quaternion-valued signals, such as the gradient operator, chain and product derivative rules, and Taylor series expansion are presented. This serves to establish important applications of adaptive information processing in the quaternion domain for both single-node and multi-node formulations.}
 }
 
 @article{bourigault2022timing,

@@ -1,13 +1,12 @@
-<!-- CORRECTED DARK MODE FIX - Replace the previous one in _includes/head.liquid -->
 <script>
-  document.documentElement.setAttribute('data-theme', 'dark');
+  document.documentElement.setAttribute('data-theme', 'light');
   if (typeof Storage !== 'undefined') {
-    localStorage.setItem('theme', 'dark');
+    localStorage.setItem('theme', 'light');
+    localStorage.setItem('themeSetting', 'light');
   }
 </script>
 
 <style>
-  /* HIDE ONLY THE TOGGLE BUTTON */
   .toggle-container,
   #light-toggle,
   button#light-toggle,
@@ -16,76 +15,54 @@
     visibility: hidden !important;
   }
 
-  /* FORCE DARK BACKGROUNDS */
   :root,
   html,
   body {
-    background-color: #212529 !important;
-    --global-bg-color: #212529 !important;
-    --global-text-color: #e5e7eb !important;
-    --global-theme-color: #06b6d4 !important;
+    background-color: #ffffff !important;
+    --global-bg-color: #ffffff !important;
+    --global-text-color: #1f2937 !important;
+    --global-theme-color: #0369a1 !important;
   }
 
-  /* FORCE WHITE TEXT - BUT NOT ON LINKS OR CANVAS */
-  body,
-  div:not(.social):not(.contact-icons),
-  p,
-  span:not(.nav-link),
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  td,
-  th,
-  li:not(.nav-item) {
-    color: #e5e7eb !important;
+  body {
+    color: #1f2937 !important;
   }
 
-  /* KEEP LINKS CYAN/BLUE */
-  a,
-  a *,
-  .nav-link,
-  .navbar-brand {
-    color: #06b6d4 !important;
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    color: #111827 !important;
+  }
+
+  .navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  .navbar-brand,
+  .nav-link {
+    color: #1f2937 !important;
+  }
+
+  .navbar-brand:hover,
+  .nav-link:hover {
+    color: #0369a1 !important;
+  }
+
+  a {
+    color: #0369a1;
   }
 
   a:hover {
-    color: #0891b2 !important;
+    color: #075985;
   }
 
-  /* DARK NAVBAR */
-  .navbar {
-    background-color: #212529 !important;
-    border-bottom: 1px solid #424246 !important;
-  }
-
-  /* DARK CARDS */
   .card {
-    background-color: #1a1d21 !important;
-  }
-
-  /* Let quaternion background work */
-  canvas,
-  canvas * {
-    background: transparent !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
   }
 
   #quaternion-canvas {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: -1 !important;
     pointer-events: none !important;
-  }
-</style>
-
-<style>
-  body {
-    background-color: transparent !important;
   }
 
   .container,
@@ -93,20 +70,6 @@
   .post,
   article {
     background-color: transparent !important;
-  }
-
-  .card {
-    background-color: rgba(26, 29, 33, 0.85) !important;
-    backdrop-filter: blur(10px);
-  }
-
-  .navbar {
-    background-color: rgba(33, 37, 41, 0.95) !important;
-    backdrop-filter: blur(5px);
-  }
-
-  #quaternion-canvas {
-    z-index: -2 !important;
   }
 </style>
 
@@ -180,24 +143,6 @@
 {% endif %}
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url | bust_css_cache }}">
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
-
-{% if site.enable_darkmode %}
-  <!-- Dark Mode -->
-  <script src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
-  <link
-    defer
-    rel="stylesheet"
-    href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url | bust_file_cache }}"
-    media="none"
-    id="highlight_theme_dark"
-  >
-  <script>
-    initTheme();
-  </script>
-{% endif %}
-
-<script src="{{ '/assets/js/theme.js' | relative_url | bust_file_cache }}"></script>
-<script src="{{ '/assets/js/force-dark-mode.js' | relative_url | bust_file_cache }}"></script>
 
 {% if page.map %}
   <!-- GeoJSON support via Leaflet -->

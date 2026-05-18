@@ -43,7 +43,7 @@ layout: default
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
       <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+        <a href="{{ '/news/' | relative_url }}" style="color: inherit">News</a>
       </h2>
       {% include news.liquid limit=true %}
     {% endif %}
@@ -56,12 +56,20 @@ layout: default
       {% include latest_posts.liquid %}
     {% endif %}
 
-    <!-- Selected papers -->
+    <!-- Selected papers (kept for backwards compatibility) -->
     {% if page.selected_papers %}
       <h2>
         <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
       </h2>
       {% include selected_papers.liquid %}
+    {% endif %}
+
+    <!-- All publications inline -->
+    {% if page.all_publications %}
+      <h2 id="publications">Publications</h2>
+      <div class="publications">
+        {% bibliography %}
+      </div>
     {% endif %}
 
     <!-- Social -->

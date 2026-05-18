@@ -1,204 +1,193 @@
+// Small "hypersphere" quaternion widget in the top-right corner.
+//
+// We sample a handful of Hopf fibers (great circles on S^3), apply the unit
+// quaternion rotation in 4D by left multiplication, then stereographically
+// project from S^3 to R^3 (using north pole (0,0,0,1)), then perspective
+// project to 2D. The result is a rotating Hopf-style configuration of
+// interlocking circles — the canonical visualization of the 3-sphere.
 document.addEventListener("DOMContentLoaded", function () {
+  const SIZE = 160;
   const canvas = document.createElement("canvas");
   canvas.id = "quaternion-canvas";
-  canvas.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none;";
-  document.body.insertBefore(canvas, document.body.firstChild);
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = SIZE * dpr;
+  canvas.height = SIZE * dpr;
+  canvas.style.cssText =
+    "position: fixed; top: 70px; right: 20px; width: " +
+    SIZE +
+    "px; height: " +
+    SIZE +
+    "px; z-index: 5; pointer-events: none;";
+  document.body.appendChild(canvas);
 
   const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  ctx.scale(dpr, dpr);
 
-  // Quaternion class for 3D rotations
-  class Quaternion {
-    constructor(w, x, y, z) {
-      this.w = w;
-      this.x = x;
-      this.y = y;
-      this.z = z;
-    }
-
-    multiply(q) {
-      return new Quaternion(
-        this.w * q.w - this.x * q.x - this.y * q.y - this.z * q.z,
-        this.w * q.x + this.x * q.w + this.y * q.z - this.z * q.y,
-        this.w * q.y - this.x * q.z + this.y * q.w + this.z * q.x,
-        this.w * q.z + this.x * q.y - this.y * q.x + this.z * q.w
-      );
-    }
-
-    rotatePoint(p) {
-      const qp = new Quaternion(0, p.x, p.y, p.z);
-      const qConj = new Quaternion(this.w, -this.x, -this.y, -this.z);
-      const result = this.multiply(qp).multiply(qConj);
-      return { x: result.x, y: result.y, z: result.z };
-    }
-
-    normalize() {
-      const len = Math.sqrt(this.w ** 2 + this.x ** 2 + this.y ** 2 + this.z ** 2);
-      return new Quaternion(this.w / len, this.x / len, this.y / len, this.z / len);
-    }
+  // 4D quaternion algebra (treat 4D vectors as quaternions q = w + xi + yj + zk).
+  function qMul(a, b) {
+    return {
+      w: a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
+      x: a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+      y: a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
+      z: a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
+    };
   }
 
-  // Create particles ONLY on left and right sides
-  const particles = [];
-  const numParticles = 40; // Reduced number
-  const sideMargin = 0.25; // Particles in left 25% and right 25%
-
-  for (let i = 0; i < numParticles; i++) {
-    // Randomly place in left or right side
-    const isLeftSide = Math.random() > 0.5;
-    const x = isLeftSide
-      ? Math.random() * (canvas.width * sideMargin) // Left side
-      : canvas.width * (1 - sideMargin) + Math.random() * (canvas.width * sideMargin); // Right side
-
-    particles.push({
-      pos: {
-        x: x,
-        y: Math.random() * canvas.height,
-        z: Math.random() * 400 - 200,
-      },
-      basePos: {},
-      size: Math.random() * 1 + 0.6, // Small particles
-      hue: Math.random() * 40 + 200,
-      side: isLeftSide ? "left" : "right", // Track which side
-    });
-    particles[i].basePos = { ...particles[i].pos };
+  function fromAxisAngle(ax, ay, az, ang) {
+    const h = ang / 2;
+    const s = Math.sin(h);
+    return { w: Math.cos(h), x: ax * s, y: ay * s, z: az * s };
   }
+
+  // Hopf fiber over base point (theta, phi) on S^2, parameterized by t.
+  // Returns a unit quaternion on S^3.
+  function hopfFiber(theta, phi, t) {
+    const a = Math.cos(theta / 2);
+    const b = Math.sin(theta / 2);
+    const u = t + phi / 2;
+    const v = t - phi / 2;
+    return {
+      w: a * Math.cos(u),
+      x: a * Math.sin(u),
+      y: b * Math.cos(v),
+      z: b * Math.sin(v),
+    };
+  }
+
+  // Stereographic projection S^3 -> R^3 from north pole (w,x,y,z) = (0,0,0,1).
+  // We map (w,x,y,z) -> (w, x, y) / (1 - z).  When z ~ 1 the point goes to
+  // infinity; we clip to a max radius so it stays inside the canvas.
+  const STEREO_CLIP = 6;
+  function stereo(p) {
+    const d = 1 - p.z;
+    if (Math.abs(d) < 1e-3) return null;
+    return { x: p.w / d, y: p.x / d, z: p.y / d };
+  }
+
+  // Sample base points on S^2 (theta in (0, pi), phi in [0, 2pi)).
+  // Six fibers gives a clear, uncluttered hypersphere.
+  const FIBERS = [];
+  const baseAngles = [
+    [Math.PI / 3, 0],
+    [Math.PI / 3, (2 * Math.PI) / 3],
+    [Math.PI / 3, (4 * Math.PI) / 3],
+    [(2 * Math.PI) / 3, Math.PI / 3],
+    [(2 * Math.PI) / 3, Math.PI],
+    [(2 * Math.PI) / 3, (5 * Math.PI) / 3],
+  ];
+  baseAngles.forEach(([theta, phi], i) => {
+    FIBERS.push({ theta: theta, phi: phi, index: i });
+  });
+
+  const STEPS = 80;
+  const cx = SIZE / 2;
+  const cy = SIZE / 2;
+  const VIEW_SCALE = 22; // R^3 -> canvas pixels
+  const PERSPECTIVE = 6;
+
+  // Fixed normalized rotation axis used to drive the animation.
+  const axis = (function () {
+    const a = { x: 0.4, y: 0.6, z: 0.7 };
+    const L = Math.hypot(a.x, a.y, a.z);
+    return { x: a.x / L, y: a.y / L, z: a.z / L };
+  })();
+
+  // Grey-blue shades for the fibers.
+  const shades = [
+    "rgba(30, 64, 110, ALPHA)",
+    "rgba(55, 90, 130, ALPHA)",
+    "rgba(80, 110, 145, ALPHA)",
+    "rgba(105, 130, 160, ALPHA)",
+    "rgba(95, 115, 145, ALPHA)",
+    "rgba(70, 100, 135, ALPHA)",
+  ];
 
   let angle = 0;
 
-  // NO MOUSE TRACKING - automatic rotation only
-  // Fixed rotation axis (no mouse interaction)
-  const fixedAxis = {
-    x: 0.3,
-    y: 0.4,
-    z: 0.5,
-  };
-
-  // Normalize the fixed axis
-  const len = Math.sqrt(fixedAxis.x ** 2 + fixedAxis.y ** 2 + fixedAxis.z ** 2);
-  fixedAxis.x /= len;
-  fixedAxis.y /= len;
-  fixedAxis.z /= len;
-
-  function animate() {
-    // Clear with subtle fade
-    ctx.fillStyle = "rgba(33, 37, 41, 0.08)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Slow automatic rotation - NO MOUSE INFLUENCE
-    angle += 0.001; // Very slow rotation
-
-    // Create quaternion from FIXED axis-angle (no mouse)
-    const halfAngle = angle / 2;
-    const q = new Quaternion(
-      Math.cos(halfAngle),
-      fixedAxis.x * Math.sin(halfAngle),
-      fixedAxis.y * Math.sin(halfAngle),
-      fixedAxis.z * Math.sin(halfAngle)
-    ).normalize();
-
-    particles.forEach((p, i) => {
-      // Calculate center for rotation based on which side particle is on
-      const centerX =
-        p.side === "left"
-          ? (canvas.width * sideMargin) / 2 // Center of left margin
-          : canvas.width * (1 - sideMargin / 2); // Center of right margin
-
-      const centered = {
-        x: p.basePos.x - centerX,
-        y: p.basePos.y - canvas.height / 2,
-        z: p.basePos.z,
-      };
-
-      // Apply quaternion rotation
-      const rotated = q.rotatePoint(centered);
-
-      // Move back to side position
-      p.pos.x = rotated.x + centerX;
-      p.pos.y = rotated.y + canvas.height / 2;
-      p.pos.z = rotated.z;
-
-      // Perspective projection
-      const perspective = 600;
-      const scale = perspective / (perspective + p.pos.z);
-      const x2d = p.pos.x * scale + centerX * (1 - scale);
-      const y2d = p.pos.y * scale + (canvas.height / 2) * (1 - scale);
-
-      // Subtle opacity
-      const opacity = 0.25 + scale * 0.45;
-
-      // Subtle particles
-      const particleColor = `hsla(${p.hue}, 70%, 55%, ${opacity})`;
-
-      // Draw particle
-      ctx.beginPath();
-      ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
-      ctx.fillStyle = particleColor;
-      ctx.fill();
-
-      // Draw connections only within same side and nearby particles
-      particles.slice(i + 1).forEach((p2) => {
-        // Only connect particles on same side
-        if (p.side !== p2.side) return;
-
-        const dx = p.pos.x - p2.pos.x;
-        const dy = p.pos.y - p2.pos.y;
-        const dz = p.pos.z - p2.pos.z;
-        const dist3D = Math.sqrt(dx ** 2 + dy ** 2 + dz ** 2);
-
-        // Shorter connection distance for subtlety
-        if (dist3D < 150) {
-          const scale2 = perspective / (perspective + p2.pos.z);
-          const centerX2 = p2.side === "left" ? (canvas.width * sideMargin) / 2 : canvas.width * (1 - sideMargin / 2);
-          const x2d2 = p2.pos.x * scale2 + centerX2 * (1 - scale2);
-          const y2d2 = p2.pos.y * scale2 + (canvas.height / 2) * (1 - scale2);
-
-          // Very subtle connections
-          const connectionOpacity = (1 - dist3D / 150) * 0.12 * Math.min(scale, scale2);
-          const lineColor = `rgba(140, 160, 190, ${connectionOpacity})`;
-
-          ctx.beginPath();
-          ctx.moveTo(x2d, y2d);
-          ctx.lineTo(x2d2, y2d2);
-          ctx.strokeStyle = lineColor;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      });
-    });
-
-    requestAnimationFrame(animate);
+  function project2D(p3) {
+    const persp = PERSPECTIVE / (PERSPECTIVE + p3.z);
+    return {
+      x: cx + p3.x * VIEW_SCALE * persp,
+      y: cy - p3.y * VIEW_SCALE * persp,
+      depth: p3.z,
+      scale: persp,
+    };
   }
 
-  animate();
-
-  // Handle window resize
-  window.addEventListener("resize", () => {
-    const oldWidth = canvas.width;
-    const oldHeight = canvas.height;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Reposition particles to maintain side placement
-    particles.forEach((p) => {
-      if (p.side === "left") {
-        // Keep in left margin
-        p.basePos.x = (p.basePos.x / oldWidth) * canvas.width;
-        if (p.basePos.x > canvas.width * sideMargin) {
-          p.basePos.x = Math.random() * (canvas.width * sideMargin);
-        }
-      } else {
-        // Keep in right margin
-        const oldRightStart = oldWidth * (1 - sideMargin);
-        const newRightStart = canvas.width * (1 - sideMargin);
-        p.basePos.x = newRightStart + ((p.basePos.x - oldRightStart) / (oldWidth * sideMargin)) * (canvas.width * sideMargin);
+  function drawFiber(fiber, q) {
+    const pts = [];
+    for (let i = 0; i <= STEPS; i++) {
+      const t = (i / STEPS) * 2 * Math.PI;
+      const p4 = hopfFiber(fiber.theta, fiber.phi, t);
+      const rotated = qMul(q, p4); // left-multiply: rotates S^3 in 4D
+      const p3 = stereo(rotated);
+      if (!p3) {
+        pts.push(null);
+        continue;
       }
+      const r = Math.hypot(p3.x, p3.y, p3.z);
+      if (r > STEREO_CLIP) {
+        pts.push(null);
+        continue;
+      }
+      pts.push(project2D(p3));
+    }
 
-      p.basePos.y = (p.basePos.y / oldHeight) * canvas.height;
-      p.pos.x = p.basePos.x;
-      p.pos.y = p.basePos.y;
+    const baseColor = shades[fiber.index % shades.length];
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = "round";
+
+    // Draw segment-by-segment so we can shade by depth and break across gaps.
+    let prev = null;
+    for (let i = 0; i < pts.length; i++) {
+      const cur = pts[i];
+      if (!cur || !prev) {
+        prev = cur;
+        continue;
+      }
+      // Skip huge jumps (where the curve wrapped around infinity).
+      const jump = Math.hypot(cur.x - prev.x, cur.y - prev.y);
+      if (jump > SIZE * 0.5) {
+        prev = cur;
+        continue;
+      }
+      const avgScale = (cur.scale + prev.scale) / 2;
+      const alpha = 0.25 + 0.55 * Math.max(0, Math.min(1, avgScale - 0.6));
+      ctx.strokeStyle = baseColor.replace("ALPHA", alpha.toFixed(3));
+      ctx.beginPath();
+      ctx.moveTo(prev.x, prev.y);
+      ctx.lineTo(cur.x, cur.y);
+      ctx.stroke();
+      prev = cur;
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, SIZE, SIZE);
+    angle += 0.005;
+    const q = fromAxisAngle(axis.x, axis.y, axis.z, angle);
+
+    // Sort fibers back-to-front by their average projected depth so
+    // foreground rings draw over background ones.
+    const ordered = FIBERS.map((f) => {
+      // Cheap depth proxy: project a single point.
+      const p4 = hopfFiber(f.theta, f.phi, 0);
+      const r = qMul(q, p4);
+      const p = stereo(r);
+      return { f: f, depth: p ? p.z : 0 };
     });
-  });
+    ordered.sort((a, b) => a.depth - b.depth);
+    ordered.forEach((o) => drawFiber(o.f, q));
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  // Hide on narrow screens.
+  function updateVisibility() {
+    canvas.style.display = window.innerWidth < 768 ? "none" : "block";
+  }
+  updateVisibility();
+  window.addEventListener("resize", updateVisibility);
 });
