@@ -138,12 +138,19 @@ article {
         font-size: 0.95em;
       }
 
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
       .links .btn {
         background-color: #f3f4f6 !important;
         color: #0369a1 !important;
         border: 1px solid #e5e7eb !important;
-        margin-right: 0.25rem;
-        margin-top: 0.25rem;
+        margin-right: 0;
+        margin-top: 0;
 
         &:hover {
           background-color: #e0f2fe !important;
