@@ -241,23 +241,6 @@
       {% endif %}
       {% if entry.dataset %}
         <a href="{{ entry.dataset }}" class="btn btn-sm z-depth-0" role="button">Dataset</a>
-        {% if entry.dataset contains 'huggingface.co/datasets/' %}
-          {% assign hf_id = entry.dataset | split: 'huggingface.co/datasets/' | last | split: '?' | first | split: '#' | first %}
-          {% capture hf_api %}https://huggingface.co/api/datasets/{{ hf_id }}?expand%5B%5D=downloadsAllTime{% endcapture %}
-          {% assign hf_api_enc = hf_api | url_encode %}
-          <a
-            href="{{ entry.dataset }}"
-            role="button"
-            aria-label="Hugging Face dataset downloads"
-            style="line-height: 0;"
-          >
-            <img
-              style="height: 1.55rem; position: relative; top: -2px;"
-              src="https://img.shields.io/badge/dynamic/json?url={{ hf_api_enc }}&query=%24.downloadsAllTime&label=&logo=huggingface&logoColor=ff9d00&labelColor=f3f4f6&color=f3f4f6&cacheSeconds=3600"
-              alt="Hugging Face downloads"
-            >
-          </a>
-        {% endif %}
       {% endif %}
       {% if entry.poster %}
         {% if entry.poster contains '://' %}
