@@ -14,7 +14,7 @@ html[data-theme="dark"] {
   --global-bg-color: #ffffff !important;
   --global-code-bg-color: #f3f4f6 !important;
   --global-text-color: #1f2937 !important;
-  --global-text-color-light: #6b7280 !important;
+  --global-text-color-light: #1f2937 !important;
   --global-theme-color: #0369a1 !important;
   --global-hover-color: #075985 !important;
   --global-hover-text-color: #ffffff !important;
@@ -89,87 +89,189 @@ article {
   background-color: transparent !important;
 }
 
-// Smaller profile photo
+// Modest, refined profile photo
 .profile {
-  max-width: 150px !important;
+  max-width: 160px !important;
+  margin-left: 1.5rem;
+  margin-bottom: 0.75rem;
 
   picture,
   img {
-    max-width: 150px !important;
+    max-width: 160px !important;
     width: 100% !important;
     height: auto !important;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(17, 24, 39, 0.06) !important;
+  }
+
+  .address,
+  .more-info {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: #1a1a1a !important;
+
+    p {
+      margin-bottom: 0.1rem;
+      color: #1a1a1a !important;
+    }
   }
 }
 
 @media (min-width: 576px) {
   .profile {
-    width: 150px !important;
-    max-width: 150px !important;
+    width: 160px !important;
+    max-width: 160px !important;
   }
 }
 
-// Cleaner publications presentation
+@media (max-width: 575px) {
+  .profile {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+
+// About intro: comfortable reading width and rhythm
+.post-header .post-title {
+  margin-bottom: 0.25rem;
+}
+
+.clearfix {
+  line-height: 1.6;
+}
+
+article > h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #111827 !important;
+  margin-top: 1.8rem;
+  margin-bottom: 0.7rem;
+}
+
+// Cleaner, sober publications presentation
 .publications {
   ol.bibliography {
     list-style: none;
     padding-left: 0;
+    margin-bottom: 0;
 
     li {
-      padding: 1rem 0;
-      border-bottom: 1px solid #f1f5f9;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid #eef1f5;
 
       &:last-child {
         border-bottom: none;
       }
 
-      .title {
-        font-weight: 600;
-        color: #111827 !important;
-        margin-bottom: 0.25rem;
+      // Use the full column width — no wasted right-hand gutter
+      .row > div {
+        flex: 0 0 100%;
+        max-width: 100%;
       }
 
-      .author {
-        color: #4b5563 !important;
+      .title {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.4;
+        color: #111827 !important;
         margin-bottom: 0.15rem;
       }
 
-      .periodical {
-        color: #6b7280 !important;
-        font-size: 0.95em;
-      }
+      .author {
+        color: #1a1a1a !important;
+        font-size: 0.9rem;
+        line-height: 1.45;
+        margin-bottom: 0.1rem;
 
-      .links .btn {
-        background-color: #f3f4f6 !important;
-        color: #0369a1 !important;
-        border: 1px solid #e5e7eb !important;
-        margin-right: 0.25rem;
-        margin-top: 0.25rem;
-
-        &:hover {
-          background-color: #e0f2fe !important;
-          color: #075985 !important;
-          border-color: #bae6fd !important;
+        em {
+          color: #000000 !important;
+          font-style: normal;
+          font-weight: 700;
+          border-bottom: none !important;
         }
       }
 
-      .tldr-text {
-        background-color: #f8fafc;
-        border-left: 3px solid #0369a1;
-        padding: 0.5rem 0.75rem;
-        margin-top: 0.5rem;
-        color: #1f2937;
-        font-size: 0.95em;
+      .periodical {
+        color: #1a1a1a !important;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        font-style: normal;
+
+        em,
+        i {
+          font-style: normal;
+        }
       }
 
+      .links {
+        margin-top: 0.4rem;
+
+        .btn {
+          background-color: #ffffff !important;
+          color: #0369a1 !important;
+          border: 1px solid #dfe3e8 !important;
+          border-radius: 5px;
+          padding: 0.1rem 0.55rem;
+          font-size: 0.78rem;
+          font-weight: 500;
+          line-height: 1.5;
+          margin-right: 0.3rem;
+          margin-top: 0.2rem;
+          box-shadow: none !important;
+          transition:
+            background-color 0.15s ease,
+            border-color 0.15s ease,
+            color 0.15s ease;
+
+          &:hover {
+            background-color: #f0f9ff !important;
+            color: #075985 !important;
+            border-color: #7dd3fc !important;
+          }
+        }
+
+        .btn.award {
+          background-color: #fffbeb !important;
+          color: #92400e !important;
+          border-color: #fde68a !important;
+        }
+      }
+
+      // Always-visible TL;DR summary box
+      .tldr-box {
+        display: block;
+        margin-top: 0.55rem;
+        padding: 0.5rem 0.75rem;
+        background-color: #f6f8fb;
+        border: 1px solid #e6ebf1;
+        border-left: 3px solid #0369a1;
+        border-radius: 6px;
+        font-size: 0.86rem;
+        line-height: 1.5;
+        color: #1a1a1a;
+      }
+
+      .tldr-label {
+        display: inline-block;
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #0369a1;
+        margin-right: 0.4rem;
+        vertical-align: baseline;
+      }
+
+      // Keep abstract / bibtex as click-to-expand
       .abstract.hidden,
-      .bibtex.hidden,
-      .tldr.hidden {
+      .bibtex.hidden {
         display: none;
       }
 
       .abstract.hidden.open,
-      .bibtex.hidden.open,
-      .tldr.hidden.open {
+      .bibtex.hidden.open {
         display: block;
         margin-top: 0.5rem;
       }
@@ -178,11 +280,13 @@ article {
 
   h2.year {
     color: #111827 !important;
-    border-bottom: 2px solid #0369a1;
-    padding-bottom: 0.25rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.3rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
   }
 }
 
