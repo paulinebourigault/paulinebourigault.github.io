@@ -95,7 +95,7 @@
   }
   pre .c { color: var(--faint); }
   pre .k { color: var(--accent); }
-  pre .s { color: var(--untrusted); }
+  pre .s { color: var(--allow); }
 
   ul.plain { padding-left: 1.1em; margin: 0 0 1.2em; }
   ul.plain li { margin-bottom: 0.5em; }
@@ -111,14 +111,14 @@
   figcaption b { font-family: var(--mono); font-weight: 500; font-size: 0.8rem; color: var(--ink); letter-spacing: 0.02em; margin-right: 6px; }
   .scroll { overflow-x: auto; }
 
+  /* Session tags: a monochrome chip system — outlined for untrusted, solid for secret. */
   .tag {
-    display: inline-block; font-family: var(--mono); font-size: 0.75rem; line-height: 1;
-    padding: 4px 7px 5px; border-radius: 999px; background: var(--other-soft);
-    color: var(--other-tag); white-space: nowrap;
+    display: inline-block; font-family: var(--mono); font-size: 0.72rem; line-height: 1;
+    letter-spacing: 0.03em; padding: 4px 8px 5px; border-radius: 3px;
+    border: 1px solid var(--ink); background: transparent; color: var(--ink); white-space: nowrap;
   }
-  .tag[data-tag="secret"] { background: var(--secret-soft); color: var(--secret); }
-  .tag[data-tag="untrusted"] { background: var(--untrusted-soft); color: var(--untrusted); }
-  .tags { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+  .tag[data-tag="secret"] { background: var(--ink); color: var(--paper); }
+  .tags { display: inline-flex; flex-wrap: wrap; gap: 5px; }
 
   /* Trace: a compact vertical step list that fits the reading column */
   ol.trace { list-style: none; margin: 0; padding: 0; border: 1px solid var(--rule); border-radius: 4px; background: var(--raised); overflow: hidden; }
