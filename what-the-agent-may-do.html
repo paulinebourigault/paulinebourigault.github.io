@@ -120,20 +120,16 @@
   .tag[data-tag="untrusted"] { background: var(--untrusted-soft); color: var(--untrusted); }
   .tags { display: inline-flex; flex-wrap: wrap; gap: 4px; }
 
-  /* Trace table */
-  table.trace { width: 100%; border-collapse: collapse; min-width: 40rem; font-size: 0.95rem; background: var(--raised); border: 1px solid var(--rule); }
-  table.trace th {
-    font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--muted); text-align: left; padding: 12px 14px;
-    border-bottom: 1px solid var(--rule); vertical-align: bottom;
-  }
-  table.trace td { padding: 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  table.trace tr:last-child td { border-bottom: 0; }
-  table.trace td.n { font-family: var(--mono); color: var(--faint); width: 2.5rem; font-variant-numeric: tabular-nums; }
-  table.trace td.req { font-family: var(--mono); font-size: 0.86rem; overflow-wrap: anywhere; }
-  table.trace td.role { color: var(--muted); font-size: 0.92rem; }
-  table.trace tr.final td { background: var(--deny-soft); }
-  .step-what { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); display: block; margin-top: 4px; }
+  /* Trace: a compact vertical step list that fits the reading column */
+  ol.trace { list-style: none; margin: 0; padding: 0; border: 1px solid var(--rule); border-radius: 4px; background: var(--raised); overflow: hidden; }
+  ol.trace li { display: grid; grid-template-columns: 1.75rem 1fr; gap: 2px 12px; padding: 14px 16px; border-top: 1px solid var(--rule); }
+  ol.trace li:first-child { border-top: 0; }
+  ol.trace .n { font-family: var(--mono); font-size: 0.8rem; color: var(--faint); font-variant-numeric: tabular-nums; padding-top: 1px; }
+  ol.trace .top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  ol.trace .req { font-family: var(--mono); font-size: 0.82rem; overflow-wrap: anywhere; color: var(--ink); }
+  ol.trace .what { grid-column: 2; font-size: 0.9rem; color: var(--muted); line-height: 1.4; }
+  ol.trace li.final { background: var(--deny-soft); box-shadow: inset 3px 0 0 var(--deny); }
+  ol.trace .blocked { font-family: var(--mono); font-size: 0.74rem; color: var(--deny); }
 
   .aside { border-left: 2px solid var(--accent); padding: 2px 0 2px 18px; color: var(--muted); margin: 28px 0; }
 
@@ -188,28 +184,25 @@
     <p>Take the action's own example workflow &mdash; it answers mentions on issues and pull requests, with no extra configuration. For a comment on a pull request, the checker reports this three-step sequence the configuration allows:</p>
   </div>
 
-  <figure id="trace">
-    <div class="scroll"><table class="trace">
-      <thead><tr><th>#</th><th>Request</th><th>Session after</th></tr></thead>
-      <tbody>
-        <tr>
-          <td class="n">1</td>
-          <td class="req">Input/entity/comments<span class="step-what">a comment on the thread, written by anyone</span></td>
-          <td class="role"><span class="tags"><span class="tag" data-tag="untrusted">untrusted</span></span></td>
-        </tr>
-        <tr>
-          <td class="n">2</td>
-          <td class="req">Read/.git/config<span class="step-what">the file that holds the repository token</span></td>
-          <td class="role"><span class="tags"><span class="tag" data-tag="untrusted">untrusted</span><span class="tag" data-tag="secret">secret</span></span></td>
-        </tr>
-        <tr class="final">
-          <td class="n">3</td>
-          <td class="req">mcp/github_comment/update_claude_comment<span class="step-what">the public comment the action maintains</span></td>
-          <td class="role"><span class="tags"><span class="tag" data-tag="untrusted">untrusted</span><span class="tag" data-tag="secret">secret</span></span> &mdash; blocked by <em>exfiltration</em></td>
-        </tr>
-      </tbody>
-    </table></div>
-    <figcaption><b>Figure 1</b>The <em>exfiltration</em> counterexample the checker prints for the default tag-mode envelope: untrusted text, then the token, then a public write, all in one session. Read it as a property of the <em>configuration</em>, not a demonstrated attack.</figcaption>
+  <figure class="narrow" id="trace">
+    <ol class="trace">
+      <li>
+        <span class="n">1</span>
+        <div class="top"><span class="req">Input/entity/comments</span><span class="tags"><span class="tag" data-tag="untrusted">untrusted</span></span></div>
+        <span class="what">a comment on the thread, written by anyone</span>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <div class="top"><span class="req">Read/.git/config</span><span class="tags"><span class="tag" data-tag="untrusted">untrusted</span><span class="tag" data-tag="secret">secret</span></span></div>
+        <span class="what">the file that holds the repository token</span>
+      </li>
+      <li class="final">
+        <span class="n">3</span>
+        <div class="top"><span class="req">mcp/github_comment/update_claude_comment</span><span class="blocked">blocked &middot; exfiltration</span></div>
+        <span class="what">the public comment the action maintains &mdash; the session already holds <span class="tag" data-tag="untrusted">untrusted</span> and <span class="tag" data-tag="secret">secret</span></span>
+      </li>
+    </ol>
+    <figcaption><b>Figure 1</b>The <em>exfiltration</em> counterexample the checker prints for the default tag-mode envelope: untrusted text, then the token, then a public write, in one session. A property of the <em>configuration</em>, not a demonstrated attack.</figcaption>
   </figure>
 
   <div class="col">
