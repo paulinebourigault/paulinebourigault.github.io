@@ -5,25 +5,25 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
 <style>
   :root {
-    --paper: #f3f5f1;
-    --raised: #fbfcfa;
-    --sunk: #e8ece6;
-    --ink: #18201c;
-    --muted: #5b665f;
-    --faint: #8a948d;
-    --rule: #d3d9d1;
-    --accent: #0e6a5b;
-    --accent-soft: #d7ebe5;
-    --secret: #7446b0;
-    --secret-soft: #ece3f7;
-    --untrusted: #ad5e0c;
-    --untrusted-soft: #f6e6d2;
-    --other-tag: #3f6f8f;
-    --other-soft: #dde9f1;
-    --deny: #b3261e;
-    --deny-soft: #f7dfdc;
-    --allow: #2f6b43;
-    --code-bg: #e9ede7;
+    --paper: #eceef2;
+    --raised: #f8f9fb;
+    --sunk: #dfe3ea;
+    --ink: #171a21;
+    --muted: #555d6b;
+    --faint: #8891a1;
+    --rule: #d2d7e0;
+    --accent: #2740c4;
+    --accent-soft: #dde1f6;
+    --secret: #7a2fbd;
+    --secret-soft: #ebe1f7;
+    --untrusted: #a85d10;
+    --untrusted-soft: #f4e7d2;
+    --other-tag: #3a6b8a;
+    --other-soft: #dce8f0;
+    --deny: #bb2f2a;
+    --deny-soft: #f6ddda;
+    --allow: #2c7a48;
+    --code-bg: #e4e7ee;
 
     --serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
     --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -33,21 +33,21 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --paper: #111513; --raised: #171c19; --sunk: #0c0f0d; --ink: #e3e8e2;
-      --muted: #a0aba4; --faint: #6f7a73; --rule: #2b332e; --accent: #5cc4ae;
-      --accent-soft: #173029; --secret: #b99af0; --secret-soft: #2a2139;
-      --untrusted: #eea556; --untrusted-soft: #36270f; --other-tag: #8fc0e0;
-      --other-soft: #182a36; --deny: #f28b82; --deny-soft: #3a1c1a; --allow: #8fd0a4;
-      --code-bg: #1a201c;
+      --paper: #12141a; --raised: #191c24; --sunk: #0d0f14; --ink: #e5e8ef;
+      --muted: #a3abba; --faint: #6d7686; --rule: #2a303c; --accent: #96a6ff;
+      --accent-soft: #1c2444; --secret: #c39af0; --secret-soft: #281c39;
+      --untrusted: #e7a552; --untrusted-soft: #362713; --other-tag: #86bce0;
+      --other-soft: #162834; --deny: #f28b82; --deny-soft: #3a1c1a; --allow: #8ed3a3;
+      --code-bg: #1b1f28;
     }
   }
   :root[data-theme="dark"] {
-    --paper: #111513; --raised: #171c19; --sunk: #0c0f0d; --ink: #e3e8e2;
-    --muted: #a0aba4; --faint: #6f7a73; --rule: #2b332e; --accent: #5cc4ae;
-    --accent-soft: #173029; --secret: #b99af0; --secret-soft: #2a2139;
-    --untrusted: #eea556; --untrusted-soft: #36270f; --other-tag: #8fc0e0;
-    --other-soft: #182a36; --deny: #f28b82; --deny-soft: #3a1c1a; --allow: #8fd0a4;
-    --code-bg: #1a201c;
+    --paper: #12141a; --raised: #191c24; --sunk: #0d0f14; --ink: #e5e8ef;
+    --muted: #a3abba; --faint: #6d7686; --rule: #2a303c; --accent: #96a6ff;
+    --accent-soft: #1c2444; --secret: #c39af0; --secret-soft: #281c39;
+    --untrusted: #e7a552; --untrusted-soft: #362713; --other-tag: #86bce0;
+    --other-soft: #162834; --deny: #f28b82; --deny-soft: #3a1c1a; --allow: #8ed3a3;
+    --code-bg: #1b1f28;
   }
 
   * { box-sizing: border-box; }
@@ -218,13 +218,13 @@
     <h2>Verified, then checked against reality</h2>
     <p>The verdicts come from <a href="https://github.com/certior/vcore">vcore</a>, a policy checker proved correct in Lean&nbsp;4 (1,462 lines, 102 theorems, no <code>sorry</code>). It decides refinement for sessions of <em>every</em> length, and a counterexample never needs more than three tool calls &mdash; a bound that is proved tight for the trifecta rule.</p>
     <p>A verified checker is only as good as the model it is given, so we test the model by <em>running the action's own code</em>. An oracle executes the unmodified action against a mock GitHub API and reports what it set up &mdash; mode, tools, where the token went, and which canary-tagged texts reached the prompt. On 3,155 generated scenarios the model and the action agree on every field in 3,143; every disagreement leaves the envelope over-approximating the real run.</p>
-    <p class="aside">And the load-bearing step is not just assumed. We drove the real Claude&nbsp;Code CLI offline, with the tag-mode configuration and a token in <code>.git/config</code>: it read the file and returned the token with no prompt, then posted it through the comment tool. The three-step counterexample is executable by the agent itself.</p>
+    <p class="aside">And the load-bearing step is not assumed. We drove the real Claude&nbsp;Code CLI offline, with the tag-mode configuration and a token in <code>.git/config</code>: it read the file and returned the token with no prompt, then posted it through the comment tool. The three-step counterexample is executable by the agent itself.</p>
 
     <h2>Across 16,346 workflows</h2>
-    <p>We collected the public workflows that use the action and analysed the 12,414 whose agent can actually run. In <strong>78%</strong> the configuration admits the exfiltration sequence, and in <strong>66%</strong> a write to the repository after untrusted text; the token sits in <code>.git/config</code> in <strong>97%</strong>. The dominant pattern is not an exotic misconfiguration &mdash; it is the default: a comment from the thread, the token in the workspace, and the comment the action maintains. Trusting text of unknown origin instead of assuming the worst barely moves the figure, because the untrusted text comes from the thread itself.</p>
+    <p>We collected the public workflows that use the action and analysed the 12,414 whose agent can run. In <strong>78%</strong> the configuration admits the exfiltration sequence, and in <strong>66%</strong> a write to the repository after untrusted text; the token sits in <code>.git/config</code> in <strong>97%</strong>. The dominant pattern is not an exotic misconfiguration &mdash; it is the default: a comment from the thread, the token in the workspace, and the comment the action maintains. Trusting text of unknown origin instead of assuming the worst barely moves the figure, because the untrusted text comes from the thread itself.</p>
 
     <h2>A one-line fix, verified</h2>
-    <p>For a violating configuration the tool searches small workflow edits and keeps one only if the checker then proves the property holds and the change merely <em>removes</em> behaviour. A single such edit repairs <strong>74%</strong> of the violating configurations; most often it is one line:</p>
+    <p>For a violating configuration the tool searches small workflow edits and keeps one only if the checker then proves the property holds and the change only <em>removes</em> behaviour. A single such edit repairs <strong>74%</strong> of the violating configurations; most often it is one line:</p>
 <pre><span class="c"># keep the token out of the agent's reach</span>
 claude_args: --disallowedTools <span class="s">"Read(./.git/**)"</span></pre>
     <p>The agent keeps every capability it uses and loses the one that reaches the credential. The fix is not advice; the same verified checker confirms it.</p>
@@ -239,7 +239,7 @@ claude_args: --disallowedTools <span class="s">"Read(./.git/**)"</span></pre>
     <h2>Try it</h2>
 <pre>git clone https://github.com/certior/vcore && cd vcore
 python3 -m vcore.actions scan --repairs .github/workflows/</pre>
-    <p>The <a href="https://huggingface.co/datasets/paulibo/vcore-actions-benchmark">benchmark</a> pairs each scenario with what the action actually did and with the verified verdicts; the <a href="https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes">corpus dataset</a> releases the de-identified envelope analysis of the public workflows. The <a href="https://github.com/certior/vcore/blob/main/docs/actions.md">method note</a> lists every assumption the envelope rests on.</p>
+    <p>The <a href="https://huggingface.co/datasets/paulibo/vcore-actions-benchmark">benchmark</a> pairs each scenario with what the action did and with the verified verdicts; the <a href="https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes">corpus dataset</a> releases the de-identified envelope analysis of the public workflows. The <a href="https://github.com/certior/vcore/blob/main/docs/actions.md">method note</a> lists every assumption the envelope rests on.</p>
   </div>
 </main>
 
