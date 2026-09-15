@@ -14,10 +14,10 @@
     --rule: #d2d7e0;
     --accent: #2740c4;
     --accent-soft: #dde1f6;
-    --secret: #7a2fbd;
-    --secret-soft: #ebe1f7;
-    --untrusted: #a85d10;
-    --untrusted-soft: #f4e7d2;
+    --secret: #8a6d00;
+    --secret-soft: #f1e8c6;
+    --untrusted: #0e6f78;
+    --untrusted-soft: #d6ebee;
     --other-tag: #3a6b8a;
     --other-soft: #dce8f0;
     --deny: #bb2f2a;
@@ -35,8 +35,8 @@
     :root:not([data-theme="light"]) {
       --paper: #12141a; --raised: #191c24; --sunk: #0d0f14; --ink: #e5e8ef;
       --muted: #a3abba; --faint: #6d7686; --rule: #2a303c; --accent: #96a6ff;
-      --accent-soft: #1c2444; --secret: #c39af0; --secret-soft: #281c39;
-      --untrusted: #e7a552; --untrusted-soft: #362713; --other-tag: #86bce0;
+      --accent-soft: #1c2444; --secret: #d9bb5c; --secret-soft: #322a10;
+      --untrusted: #57c3cd; --untrusted-soft: #103135; --other-tag: #86bce0;
       --other-soft: #162834; --deny: #f28b82; --deny-soft: #3a1c1a; --allow: #8ed3a3;
       --code-bg: #1b1f28;
     }
@@ -44,8 +44,8 @@
   :root[data-theme="dark"] {
     --paper: #12141a; --raised: #191c24; --sunk: #0d0f14; --ink: #e5e8ef;
     --muted: #a3abba; --faint: #6d7686; --rule: #2a303c; --accent: #96a6ff;
-    --accent-soft: #1c2444; --secret: #c39af0; --secret-soft: #281c39;
-    --untrusted: #e7a552; --untrusted-soft: #362713; --other-tag: #86bce0;
+    --accent-soft: #1c2444; --secret: #d9bb5c; --secret-soft: #322a10;
+    --untrusted: #57c3cd; --untrusted-soft: #103135; --other-tag: #86bce0;
     --other-soft: #162834; --deny: #f28b82; --deny-soft: #3a1c1a; --allow: #8ed3a3;
     --code-bg: #1b1f28;
   }
@@ -111,13 +111,14 @@
   figcaption b { font-family: var(--mono); font-weight: 500; font-size: 0.8rem; color: var(--ink); letter-spacing: 0.02em; margin-right: 6px; }
   .scroll { overflow-x: auto; }
 
-  /* Session tags: a monochrome chip system — outlined for untrusted, solid for secret. */
+  /* Session tags: teal for untrusted (external input), gold for secret (a credential). */
   .tag {
     display: inline-block; font-family: var(--mono); font-size: 0.72rem; line-height: 1;
     letter-spacing: 0.03em; padding: 4px 8px 5px; border-radius: 3px;
-    border: 1px solid var(--ink); background: transparent; color: var(--ink); white-space: nowrap;
+    background: var(--other-soft); color: var(--other-tag); white-space: nowrap;
   }
-  .tag[data-tag="secret"] { background: var(--ink); color: var(--paper); }
+  .tag[data-tag="untrusted"] { background: var(--untrusted-soft); color: var(--untrusted); }
+  .tag[data-tag="secret"] { background: var(--secret-soft); color: var(--secret); }
   .tags { display: inline-flex; flex-wrap: wrap; gap: 5px; }
 
   /* Trace: a compact vertical step list that fits the reading column */
