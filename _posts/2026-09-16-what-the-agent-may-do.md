@@ -11,7 +11,7 @@ related_posts: false
 
 A coding agent in a GitHub workflow reads text anyone can write while holding a repository
 token. What it can do with that is decided partly by the workflow file and partly by the
-action that runs it. This note is about computing that — the agent's *authority envelope* —
+action that runs it. This note is about computing that, the agent's *authority envelope*,
 and checking it with a procedure proved correct in [Lean 4](https://github.com/certior/vcore).
 
 <div class="repo-links">
@@ -25,8 +25,8 @@ and checking it with a procedure proved correct in [Lean 4](https://github.com/c
 ## An agent with standing access
 
 A few lines of YAML give a repository an agent that answers `@claude` mentions, reviews pull
-requests, or triages issues. On a public repository the text it reads — an issue body, a
-comment, a pull request — can be written by anyone. The agent runs with a token for the
+requests, or triages issues. On a public repository the text it reads (an issue body, a
+comment, a pull request) can be written by anyone. The agent runs with a token for the
 repository and an API key, and it can read files, run commands, comment, and push.
 
 The danger is not any single tool call. Reading a comment is fine. Reading a file is fine.
@@ -40,7 +40,7 @@ not one call at a time.
 ## The authority envelope
 
 For one triggering event, the agent's session has an *authority envelope*: the sequences of
-tool calls the configuration lets it make. I write it as a policy with memory — a request is
+tool calls the configuration lets it make. I write it as a policy with memory: a request is
 permitted or not, and running it can tag the session
 <span class="tag-u">untrusted</span> (it read text an outsider can write) or
 <span class="tag-s">secret</span> (it can read a credential). Two rules then become questions
@@ -48,7 +48,7 @@ about the envelope: can the session reach a network egress or a public write whi
 <span class="tag-u">untrusted</span> and <span class="tag-s">secret</span> (exfiltration); and
 can it write to the repository after reading untrusted text (untrusted write).
 
-Much of the envelope is set inside the action, not in the workflow file. I model
+The action itself decides much of the envelope, beyond what the workflow file shows. I model
 [anthropics/claude-code-action](https://github.com/anthropics/claude-code-action) at a pinned
 release by reading its source: in one mode it puts the issue body and its comments into the
 prompt though no line of the workflow mentions them; it grants file-reading and pushing without
@@ -62,20 +62,20 @@ three-step sequence the configuration allows:
 
 | # | request | session after |
 |---|---------|---------------|
-| 1 | `Input/entity/comments` — a comment on the thread, written by anyone | <span class="tag-u">untrusted</span> |
-| 2 | `Read/.git/config` — the file that holds the repository token | <span class="tag-u">untrusted</span> <span class="tag-s">secret</span> |
-| 3 | `mcp/github_comment/update_claude_comment` — the public comment | **blocked** — exfiltration |
+| 1 | `Input/entity/comments`: a comment on the thread, written by anyone | <span class="tag-u">untrusted</span> |
+| 2 | `Read/.git/config`: the file that holds the repository token | <span class="tag-u">untrusted</span> <span class="tag-s">secret</span> |
+| 3 | `mcp/github_comment/update_claude_comment`: the public comment | **blocked** (exfiltration) |
 
-Read it as a property of the *configuration*, not a demonstrated attack. The same workflow on
+This is a property of the *configuration*: the sequence is permitted. The same workflow on
 `issues: opened` satisfies both properties, because an issue that reaches the agent on that
-event was opened by the account that triggered it — whom the action admits only with write
+event was opened by the account that triggered it, an account the action admits only with write
 access. The verdict differs across events of the same file, and the checker says which.
 
 ## Verified, then checked against the action
 
 The verdicts come from [vcore](https://github.com/certior/vcore), a policy checker whose
 decision procedure is proved correct in Lean 4. It decides refinement for sessions of *every*
-length, and a counterexample never needs more than three tool calls — a bound proved tight for
+length, and a counterexample never needs more than three tool calls, a bound proved tight for
 the trifecta rule.
 
 A verified checker is only as good as the model it is given, so I test the model by *running the
@@ -95,19 +95,20 @@ the action maintains.
 
 For a violating configuration the tool searches small workflow edits and keeps one only if the
 checker then proves the property holds and the edit only removes behaviour. A single such edit
-repairs most violations — often one line, `claude_args: --disallowedTools "Read(./.git/**)"`,
+repairs most violations, often one line: `claude_args: --disallowedTools "Read(./.git/**)"`,
 which keeps the token out of the agent's reach while leaving every capability the agent uses.
 
-## What it does and does not say
+## Scope
 
-It bounds permissions, not behaviour: a counterexample means the configuration *permits* the
-sequence, not that a model would perform it. The ingredients are largely known — the
-prompt-injection risk and the `allowed_non_write_users` risk are in the action's own security
-notes, a related environment-variable exposure was reported and mitigated earlier, and
-`actions/checkout` persisting a token in `.git/config` is documented. The contribution is the
-session-level combination and how often it holds across real workflows, checked with a verified
-tool — not a new exploit, and no repository is named. It covers one action at one release; the
-method extends to other agent actions and to local coding agents.
+The envelope bounds permissions: a counterexample shows the configuration *permits* the
+sequence. Whether a model performs it is a separate, dynamic question. The ingredients here are
+largely known. The prompt-injection risk and the `allowed_non_write_users` risk are in the
+action's own security notes, a related environment-variable exposure was reported and mitigated
+earlier, and `actions/checkout` persisting a token in `.git/config` is documented. The
+contribution is the session-level combination and how often it holds across real workflows,
+checked with a verified tool. The results are aggregate, and the released corpus data is
+de-identified. The analysis covers one action at one release; the method extends to other agent
+actions and to local coding agents.
 
 <style>
 .tag-u, .tag-s { font-family: var(--global-code-font, monospace); font-size: 0.82em; padding: 0 5px; border-radius: 3px; border: 1px solid; white-space: nowrap; }
