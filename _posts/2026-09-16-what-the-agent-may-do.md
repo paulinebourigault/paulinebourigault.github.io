@@ -14,9 +14,13 @@ token. What it can do with that is decided partly by the workflow file and partl
 action that runs it. This note is about computing that — the agent's *authority envelope* —
 and checking it with a procedure proved correct in [Lean 4](https://github.com/certior/vcore).
 
-Code: [certior/vcore](https://github.com/certior/vcore) &middot;
-benchmark: [vcore-actions-benchmark](https://huggingface.co/datasets/paulibo/vcore-actions-benchmark) &middot;
-corpus: [vcore-workflow-envelopes](https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes).
+<div class="repo-links">
+  <strong>Code</strong> <a href="https://github.com/certior/vcore">certior/vcore</a>
+  <span class="sep">&middot;</span>
+  <strong>Benchmark</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-actions-benchmark">vcore-actions-benchmark</a>
+  <span class="sep">&middot;</span>
+  <strong>Corpus</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes">vcore-workflow-envelopes</a>
+</div>
 
 ## An agent with standing access
 
@@ -109,4 +113,8 @@ method extends to other agent actions and to local coding agents.
 .tag-u, .tag-s { font-family: var(--global-code-font, monospace); font-size: 0.82em; padding: 0 5px; border-radius: 3px; border: 1px solid; white-space: nowrap; }
 .tag-u { color: #b06a12; border-color: #b06a12; }
 .tag-s { color: #7a3fb0; border-color: #7a3fb0; }
+.repo-links { border: 1px solid var(--global-divider-color); background: var(--global-code-bg-color); border-radius: 6px; padding: 10px 14px; margin: 1.2em 0 1.8em; font-size: 0.92em; line-height: 1.95; }
+.repo-links strong { color: var(--global-text-color); }
+.repo-links a { white-space: nowrap; }
+.repo-links .sep { color: var(--global-divider-color); margin: 0 6px; }
 </style>
