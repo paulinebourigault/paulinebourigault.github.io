@@ -73,10 +73,10 @@ access. The verdict differs across events of the same file, and the checker says
 
 ## Verified, then checked against the action
 
-The verdicts come from [vcore](https://github.com/certior/vcore), a policy checker proved
-correct in Lean 4 (1,462 lines, 102 theorems, no `sorry`). It decides refinement for sessions
-of *every* length, and a counterexample never needs more than three tool calls — a bound proved
-tight for the trifecta rule.
+The verdicts come from [vcore](https://github.com/certior/vcore), a policy checker whose
+decision procedure is proved correct in Lean 4. It decides refinement for sessions of *every*
+length, and a counterexample never needs more than three tool calls — a bound proved tight for
+the trifecta rule.
 
 A verified checker is only as good as the model it is given, so I test the model by *running the
 action's own code*: an oracle executes the unmodified action against a mock GitHub API and
