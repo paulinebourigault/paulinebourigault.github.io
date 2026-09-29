@@ -54,6 +54,23 @@ body {
   color: #0369a1 !important;
 }
 
+.navbar-nav .nav-link.nav-link-boxed {
+  border: 1px solid #7dd3fc;
+  border-radius: 6px;
+  background-color: #f0f9ff;
+  color: #0369a1 !important;
+  padding: 0.25rem 0.8rem;
+  margin-top: 0.25rem;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    background-color: #e0f2fe;
+    border-color: #0369a1;
+  }
+}
+
 .card {
   background-color: #ffffff !important;
   color: #1f2937 !important;
