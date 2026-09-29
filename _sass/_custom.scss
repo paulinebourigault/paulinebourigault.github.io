@@ -232,6 +232,29 @@ article > h2 {
           }
         }
 
+        .btn-hf {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+
+          .hf-logo {
+            height: 1em;
+            width: auto;
+          }
+
+          .hf-downloads {
+            margin-left: 0.15rem;
+            padding-left: 0.4rem;
+            border-left: 1px solid #dfe3e8;
+            color: #4b5563;
+            font-variant-numeric: tabular-nums;
+
+            i {
+              font-size: 0.85em;
+            }
+          }
+        }
+
         .btn.award {
           background-color: #fffbeb !important;
           color: #92400e !important;
@@ -251,17 +274,6 @@ article > h2 {
         font-size: 0.86rem;
         line-height: 1.5;
         color: #1a1a1a;
-      }
-
-      .tldr-label {
-        display: inline-block;
-        font-size: 0.66rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: #0369a1;
-        margin-right: 0.4rem;
-        vertical-align: baseline;
       }
 
       // Keep abstract / bibtex as click-to-expand

@@ -237,7 +237,18 @@
         <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button">Code</a>
       {% endif %}
       {% if entry.dataset %}
-        <a href="{{ entry.dataset }}" class="btn btn-sm z-depth-0" role="button">Dataset</a>
+        {% if entry.dataset contains 'huggingface.co/datasets/' %}
+          {% assign hf_repo = entry.dataset | split: 'huggingface.co/datasets/' | last | split: '?' | first %}
+          <a href="{{ entry.dataset }}" class="btn btn-sm z-depth-0 btn-hf" role="button" data-hf-dataset="{{ hf_repo }}">
+            <img src="{{ '/assets/img/huggingface_logo.svg' | relative_url }}" alt="" class="hf-logo">Dataset<span
+              class="hf-downloads"
+              title="Downloads last month on Hugging Face"
+              hidden
+            ><i class="fa-solid fa-download"></i> <span class="hf-downloads-count"></span></span>
+          </a>
+        {% else %}
+          <a href="{{ entry.dataset }}" class="btn btn-sm z-depth-0" role="button">Dataset</a>
+        {% endif %}
       {% endif %}
       {% if entry.poster %}
         {% if entry.poster contains '://' %}
@@ -352,7 +363,6 @@
     {% if entry.tldr %}
       <!-- Always-visible TL;DR summary -->
       <div class="tldr-box">
-        <span class="tldr-label">TL;DR</span>
         <span class="tldr-text">{{ entry.tldr }}</span>
       </div>
     {% endif %}

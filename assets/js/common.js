@@ -66,3 +66,16 @@ $(document).ready(function () {
     trigger: "hover",
   });
 });
+
+// fill Hugging Face dataset buttons with the monthly download count
+document.querySelectorAll("[data-hf-dataset]").forEach((btn) => {
+  fetch(`https://huggingface.co/api/datasets/${btn.dataset.hfDataset}?expand[]=downloads`)
+    .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+    .then((info) => {
+      if (typeof info.downloads !== "number") return;
+      const badge = btn.querySelector(".hf-downloads");
+      badge.querySelector(".hf-downloads-count").textContent = info.downloads.toLocaleString("en-US");
+      badge.hidden = false;
+    })
+    .catch(() => {});
+});
