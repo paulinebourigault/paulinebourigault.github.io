@@ -238,20 +238,18 @@ article > h2 {
           gap: 0.3rem;
 
           .hf-logo {
-            height: 1em;
+            height: 0.9em;
             width: auto;
           }
 
           .hf-downloads {
-            margin-left: 0.15rem;
-            padding-left: 0.4rem;
+            margin-left: 0.1rem;
+            padding-left: 0.35rem;
             border-left: 1px solid #dfe3e8;
-            color: #4b5563;
+            color: #6b7280;
+            font-size: 0.68rem;
+            font-weight: 400;
             font-variant-numeric: tabular-nums;
-
-            i {
-              font-size: 0.85em;
-            }
           }
         }
 
