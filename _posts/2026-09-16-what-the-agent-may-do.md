@@ -18,7 +18,7 @@ and checking it with a procedure proved correct in [Lean 4](https://github.com/c
   <i class="fa-brands fa-github"></i> <strong>Code</strong> <a href="https://github.com/certior/vcore">certior/vcore</a>
   <span class="sep">&middot;</span>
   🤗 <strong>Benchmark</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-actions-benchmark">vcore-actions-benchmark</a> <span class="hf-downloads" data-hf-dataset="paulibo/vcore-actions-benchmark" hidden>(<span class="hf-downloads-count"></span> downloads last month)</span>
-  <span class="sep">&middot;</span>
+  <br>
   🤗 <strong>Corpus</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes">vcore-workflow-envelopes</a> <span class="hf-downloads" data-hf-dataset="paulibo/vcore-workflow-envelopes" hidden>(<span class="hf-downloads-count"></span> downloads last month)</span>
 </div>
 
