@@ -19,7 +19,8 @@ announcements:
 #   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a PhD student at **Imperial College London** working on reinforcement learning, with a focus on making learning systems reliable enough to trust. My current work spans three areas:
+<div class="bio-box">
+  <p class="bio-intro">I am a PhD student at <strong>Imperial College London</strong>. My recent work spans three areas:</p>
 
 <div class="interests">
   <div class="interest">
@@ -32,15 +33,16 @@ I am a PhD student at **Imperial College London** working on reinforcement learn
   <div class="interest">
     <i class="fa-solid fa-square-root-variable interest-icon"></i>
     <div>
-      <strong>LLMs for formalisation and theorem proving</strong>
+      <strong>RL/LLMs for formalisation and theorem proving</strong>
       <p>Lean 4 proof search, verified supervision, and Lean as a judge for natural-language maths. <a href="/publications/#bourigault2026leanpolish">LeanPolish</a>, <a href="/publications/#bourigault2026covcal">CovCal</a>, <a href="https://github.com/MoonshotAI/Kimina-Prover-Preview">Kimina-Prover</a>.</p>
     </div>
   </div>
   <div class="interest">
     <i class="fa-solid fa-shield-halved interest-icon"></i>
     <div>
-      <strong>AI agent safety and control</strong>
+      <strong>AI agent safety and control with formal language</strong>
       <p>Verified limits on what agents may do before their tool calls run. <a href="/publications/#bourigault2026voiceagentguard">VoiceAgentGuard</a>, <a href="/blog/2026/what-the-agent-may-do/">vcore</a>.</p>
     </div>
   </div>
+</div>
 </div>

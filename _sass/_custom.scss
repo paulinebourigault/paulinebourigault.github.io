@@ -322,38 +322,46 @@ article > h2 {
   }
 }
 
-// Research interests on the about page
-.interests {
-  margin: 1rem 0 0.5rem;
+// Bio box on the about page
+.bio-box {
+  background-color: #f0f7fc;
+  border: 1px solid #dbeaf5;
+  border-left: 3px solid #0369a1;
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem 0.7rem;
+  margin: 0.5rem 0 1.5rem;
 
+  .bio-intro {
+    margin: 0 0 0.6rem;
+  }
+}
+
+.interests {
   .interest {
     display: flex;
     align-items: flex-start;
-    gap: 0.9rem;
-    padding: 0.65rem 0;
-    border-top: 1px solid var(--global-divider-color);
-
-    &:last-child {
-      border-bottom: 1px solid var(--global-divider-color);
-    }
+    gap: 0.75rem;
+    padding: 0.3rem 0;
 
     p {
-      margin: 0.15rem 0 0;
+      margin: 0.05rem 0 0;
       font-size: 0.92em;
+      line-height: 1.45;
       color: var(--global-text-color-light);
     }
   }
 
   .interest-icon {
-    flex: 0 0 2.2rem;
-    height: 2.2rem;
+    flex: 0 0 1.9rem;
+    height: 1.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    background-color: #f0f9ff;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid #cfe3f1;
     color: #0369a1;
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     margin-top: 0.1rem;
   }
 }
