@@ -17,9 +17,9 @@ and checking it with a procedure proved correct in [Lean 4](https://github.com/c
 <div class="repo-links">
   <i class="fa-brands fa-github"></i> <strong>Code</strong> <a href="https://github.com/certior/vcore">certior/vcore</a>
   <span class="sep">&middot;</span>
-  🤗 <strong>Benchmark</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-actions-benchmark">vcore-actions-benchmark</a>
+  🤗 <strong>Benchmark</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-actions-benchmark">vcore-actions-benchmark</a> <span class="hf-downloads" data-hf-dataset="paulibo/vcore-actions-benchmark" hidden>(<span class="hf-downloads-count"></span> downloads last month)</span>
   <span class="sep">&middot;</span>
-  🤗 <strong>Corpus</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes">vcore-workflow-envelopes</a>
+  🤗 <strong>Corpus</strong> <a href="https://huggingface.co/datasets/paulibo/vcore-workflow-envelopes">vcore-workflow-envelopes</a> <span class="hf-downloads" data-hf-dataset="paulibo/vcore-workflow-envelopes" hidden>(<span class="hf-downloads-count"></span> downloads last month)</span>
 </div>
 
 ## An agent with standing access
@@ -117,5 +117,6 @@ actions and to local coding agents.
 .repo-links { border: 1px solid var(--global-divider-color); background: var(--global-code-bg-color); border-radius: 6px; padding: 10px 14px; margin: 1.2em 0 1.8em; font-size: 0.92em; line-height: 1.95; }
 .repo-links strong { color: var(--global-text-color); }
 .repo-links a { white-space: nowrap; }
+.repo-links .hf-downloads { color: var(--global-text-color-light); font-size: 0.9em; white-space: nowrap; }
 .repo-links .sep { color: var(--global-divider-color); margin: 0 6px; }
 </style>
