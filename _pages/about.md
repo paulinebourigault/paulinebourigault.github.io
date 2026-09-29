@@ -4,14 +4,6 @@ title: about
 permalink: /
 # subtitle: <a href='https://www.imperial.ac.uk/'>Imperial College London</a>, Department of Computing & EEE.
 
-profile:
-  align: right
-  image: photoPB(1).jpg
-  image_circular: false # or true if you want circular
-  max-width: 160px # adjust as needed
-  address: >
-    <p>Imperial College London</p>
-    <p>London, UK</p>
 news: true
 all_publications: true # show full bibliography inline
 social: true # includes social icons at the bottom of the page
@@ -27,6 +19,28 @@ announcements:
 #   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a PhD student at **Imperial College London** working on robust machine learning, signal processing, and formal reasoning systems. My research focuses on scalable and interpretable learning algorithms for multi-dimensional data, with applications in time-series modelling, computer vision, and automated theorem proving.
+I am a PhD student at **Imperial College London** working on reinforcement learning, with a focus on making learning systems reliable enough to trust. My current work spans three areas:
 
-I'm always happy to hear from people interested in similar topics or potential collaborations — feel free to reach out at _p.bourigault22 at imperial dot ac dot uk_.
+<div class="interests">
+  <div class="interest">
+    <i class="fa-solid fa-dice interest-icon"></i>
+    <div>
+      <strong>Reinforcement learning</strong>
+      <p>Off-policy evaluation, tail risk (CVaR, VaR), and what logged feedback can certify. <a href="/publications/#bourigault2026tis">TIS</a>, <a href="/publications/#bourigault2026coverage">Coverage Cliffs</a>.</p>
+    </div>
+  </div>
+  <div class="interest">
+    <i class="fa-solid fa-square-root-variable interest-icon"></i>
+    <div>
+      <strong>LLMs for formalisation and theorem proving</strong>
+      <p>Lean 4 proof search, verified supervision, and Lean as a judge for natural-language maths. <a href="/publications/#bourigault2026leanpolish">LeanPolish</a>, <a href="/publications/#bourigault2026covcal">CovCal</a>, <a href="https://github.com/MoonshotAI/Kimina-Prover-Preview">Kimina-Prover</a>.</p>
+    </div>
+  </div>
+  <div class="interest">
+    <i class="fa-solid fa-shield-halved interest-icon"></i>
+    <div>
+      <strong>AI agent safety and control</strong>
+      <p>Verified limits on what agents may do before their tool calls run. <a href="/publications/#bourigault2026voiceagentguard">VoiceAgentGuard</a>, <a href="/blog/2026/what-the-agent-may-do/">vcore</a>.</p>
+    </div>
+  </div>
+</div>
