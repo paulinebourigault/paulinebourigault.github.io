@@ -32,6 +32,8 @@ html {
 body {
   background-color: transparent !important;
   color: #1f2937 !important;
+  // Theme default is Roboto Light (300), which reads thin; use regular weight
+  font-weight: 400;
 }
 
 .navbar {
@@ -317,15 +319,26 @@ article > h2 {
   }
 }
 
-// News list cleaner
-.news {
-  .table {
-    background-color: transparent !important;
-    color: #1f2937 !important;
+// News: compact bulleted list, no dates
+.news-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 0.5rem;
 
-    th, td {
-      border-color: #f1f5f9 !important;
-      color: #1f2937 !important;
+  li {
+    position: relative;
+    padding: 0.2rem 0 0.2rem 1.1rem;
+    line-height: 1.5;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0.2rem;
+      top: 0.78em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #0369a1;
     }
   }
 }
