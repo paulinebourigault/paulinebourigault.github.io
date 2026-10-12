@@ -27,7 +27,7 @@ announcements:
     <i class="fa-solid fa-dice interest-icon"></i>
     <div>
       <strong>Reinforcement learning</strong>
-      <p>Off-policy evaluation, tail risk (CVaR, VaR), and what logged feedback can certify. <a href="/publications/#bourigault2026tis">TIS</a>, <a href="/assets/pdf/Coverage_Cliffs_Bourigault.pdf">Coverage Cliffs</a>.</p>
+      <p>Off-policy evaluation, tail risk (CVaR, VaR), and what logged feedback can certify. <a href="/publications/#bourigault2026tis">TIS</a>, <a href="/publications/#bourigault2026coveragequantile">Coverage Cliffs</a>.</p>
     </div>
   </div>
   <div class="interest">
