@@ -17,7 +17,8 @@
   pdf={Coverage_Cliffs_Bourigault.pdf},
   code={https://github.com/paulinebourigault/coverage-cliffs},
   selected={true},
-  tldr={TailCert certifies an upper-tail quantile of a policy selected from logged contextual-bandit data via a PAC-Bayes Bernstein CDF envelope, and shows that keeping only weighted CDF indicators hides which actions exceeded the budget, creating a coverage cliff that retaining action counts removes.}
+  arxiv={2610.22565},
+  tldr={TailCert provides an upper confidence bound for the tail quantile of a policy selected from logged contextual-bandit data. Matching finite-class sample-complexity bounds show when reducing logs to weighted CDF indicators creates a coverage cliff; retaining action counts restores the full-log rate on the studied rare-action class.}
 }
 
 @unpublished{bourigault2026tis,
@@ -27,7 +28,7 @@
   arxiv={2609.38096},
   code={https://github.com/paulinebourigault/TIS},
   selected={true},
-  tldr={Tail-Influence Sampling (TIS) allocates a fixed evaluation budget across queryable components of a stochastic workflow toward those that matter most for lower-tail CVaR, attaining oracle asymptotic variance and cutting MSE by 41% versus learned occupancy and 76% versus complete rollouts on CliffWalking.}
+  tldr={Tail-Influence Sampling derives influence-based, asymptotically efficient query allocation for fixed-budget CVaR evaluation. On CliffWalking it reduces MSE by 41 percent versus learned occupancy and 76 percent versus complete rollouts at matched budget; it is also evaluated on frozen LLM review workflows.}
 }
 
 @inproceedings{bourigault2026voiceagentguard,
@@ -35,6 +36,7 @@
   author={Bourigault, Emmanuelle and Bourigault, Pauline},
   booktitle={EMNLP},
   year={2026},
+  code={https://github.com/paulinebourigault/voiceagentguard},
   selected={true},
   tldr={VoiceAgentGuard prevents unsafe private-read and state-changing tool calls in voice agents by forcing every proposed action through an auditable contract gate before execution.}
 }
@@ -47,7 +49,7 @@
   dataset={https://huggingface.co/datasets/leanpolish-anon/lean-proof-compression},
   code={https://github.com/paulinebourigault/leanpolish},
   selected={true},
-  tldr={A neurosymbolic Lean 4 proof-compression method that records every verified edit, exposes the selection effects of search-generated supervision, and shows when learning from it helps beyond symbolic search.}
+  tldr={Beyond releasing verified edits, LeanPolish uncovers search-order and teacher-site shortcuts in proof-improvement supervision and introduces complete-candidate evaluations to control for them. A trained ranker reaches 70.1 percent top-1 versus 36.9 percent for the strongest frozen baseline; whole-proof fine-tuning improves verified token reduction from 2.8 to 5.5 percent on 19 PutnamBench proofs, while stronger symbolic search wins on miniF2F.}
 }
 
 @inproceedings{bourigault2026coverage,
@@ -70,7 +72,7 @@
   website={https://haithamb.github.io/covcal/},
   code={https://github.com/paulinebourigault/covcal-lean},
   selected={true},
-  tldr={COVCAL shows when Lean proofs can be safely trusted as partial evidence for math-answer selection by calibrating coverage diagnostics and abstaining when formal evidence is insufficient.}
+  tldr={Correct Lean proofs do not guarantee faithful formalization of natural-language questions. CovCal calibrates partial Lean-trace evidence for selective answer acceptance or abstention, and shows how autoformalization coverage determines whether risk-controlled selection is feasible.}
 }
 
 @inproceedings{bourigault2025information,
