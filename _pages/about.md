@@ -14,7 +14,7 @@ announcements:
 <div class="bio-box">
   <p class="bio-intro">I am a PhD candidate at <strong>Imperial College London</strong>. My research has recently focused on reinforcement learning, LLM post-training, and verified reasoning.</p>
   <p>In particular, I ask how AI systems can learn from feedback <em>reliably</em>: when proof-improvement training learns genuine gains rather than search shortcuts, how to allocate limited evaluation queries to measure tail risk, and what logged experience can certify about a policy.</p>
-  <p>Earlier, I worked on quaternion optimisation for 4D signal processing and on multimodal learning for computer vision, including vision-language models and 3D reconstruction (see <a href="/publications/">publications</a>).</p>
+  <p>Earlier, I worked on quaternion optimisation for 4D signal processing and on multimodal learning for computer vision, including vision-language models and 3D reconstruction.</p>
 </div>
 
 ## Verified reasoning
