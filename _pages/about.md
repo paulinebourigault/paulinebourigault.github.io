@@ -42,8 +42,8 @@ TailCert certifies tail quantiles of policies selected from logged bandit data, 
 
 ## AI agent verification
 
-**[VoiceAgentGuard: Contract-Gated Tool Release for Production Voice Agents](https://github.com/paulinebourigault/voiceagentguard)** — *EMNLP 2026*  
-[Code](https://github.com/paulinebourigault/voiceagentguard)  
+**[VoiceAgentGuard: Contract-Gated Tool Release for Production Voice Agents](https://aclanthology.org/2026.emnlp-industry.195/)** — *EMNLP 2026 Industry Track*  
+[Paper](https://aclanthology.org/2026.emnlp-industry.195/) · [Code](https://github.com/paulinebourigault/voiceagentguard)  
 Every tool call a voice agent proposes must pass an auditable contract gate before it runs, blocking unsafe private reads and state changes.
 
 **[vcore: Verified Authority Envelopes for AI Agents](/blog/2026/what-the-agent-may-do/)** — *Research note, 2026*  
